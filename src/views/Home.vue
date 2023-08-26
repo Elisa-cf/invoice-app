@@ -1,7 +1,5 @@
 <template>
-  <SignIn />
+  <h2>You made it</h2>
 </template>
 
-<script setup>
-import SignIn from '../views/SignIn.vue';
-</script>
+<script setup></script>

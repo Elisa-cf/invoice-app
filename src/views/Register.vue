@@ -4,6 +4,10 @@
   <p><input type="password" placeholder="Password" v-model="password" /></p>
   <button @click="register">Submit</button>
   <button @click="singInWithGoogle">Sign in With Google</button>
+  <p>
+    <span>Already have an account?</span>
+    <RouterLink to="/signin">Log in</RouterLink>
+  </p>
 </template>
 
 <script setup>
