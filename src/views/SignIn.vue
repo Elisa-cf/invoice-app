@@ -3,7 +3,7 @@
     class="bg-[#E9E9E9] h-screen w-screen flex flex-col justify-center items-center"
   >
     <div
-      class="bg-white flex flex-col justify-center items-center w-11/12 py-10 gap-4 rounded-md"
+      class="bg-white flex flex-col justify-center items-center w-11/12 py-10 gap-4 rounded-md sm:w-[500px]"
     >
       <h1 class="font-bold text-xl text-[#969696]">User Log in</h1>
       <div
