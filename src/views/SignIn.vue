@@ -16,7 +16,6 @@
         <div class="w-20 border-b border-gray-400"></div>
         <span class="text-gray-600">or</span>
         <div class="w-20 border-b border-gray-400"></div>
-            
       </div>
       <input
         class="bg-[#F2F2F2] w-10/12 p-2 rounded-md focus:outline-none focus:ring-[#969696] focus:ring-2 caret-[#969696]"
