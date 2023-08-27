@@ -1,5 +1,7 @@
 <template>
-  <h2>You made it</h2>
+  <InvoiceForm />
 </template>
 
-<script setup></script>
+<script setup>
+import InvoiceForm from '../components/InvoiceForm.vue';
+</script>
