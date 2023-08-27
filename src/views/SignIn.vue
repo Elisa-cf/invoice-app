@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#E9E9E9] h-full w-full flex flex-col justify-center items-center"
+    class="bg-[#E9E9E9] h-screen w-screen flex flex-col justify-center items-center"
   >
     <h1>Sign in in your Account</h1>
     <div class="bg-white h-1/2 w-12">
