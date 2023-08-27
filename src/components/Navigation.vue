@@ -7,7 +7,7 @@
         <div class="w-24"><img :src="BankableLogo" alt="google logo" /></div
       ></RouterLink>
 
-      <RouterLink to="/SignIn"
+      <RouterLink to="/InvoicesBoard"
         ><button
           class="bg-[#2AA9E1] p-2 rounded text-center text-white sm:hidden"
         >

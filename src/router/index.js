@@ -11,7 +11,15 @@ const router = createRouter({
       component: Home,
       meta: {
         requiresAuth: true,
-      }
+      },
+    },
+    {
+      path: '/invoicesboard',
+      name: 'invoicesboard',
+      component: () => import('../views/InvoicesBoard.vue'),
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: '/register',
