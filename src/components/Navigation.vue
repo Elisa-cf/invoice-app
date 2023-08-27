@@ -7,7 +7,7 @@
         <div class="w-24"><img :src="BankableLogo" alt="google logo" /></div
       ></RouterLink>
 
-      <RouterLink to="/InvoicesBoard"
+      <RouterLink to="/invoicesboard"
         ><button
           class="bg-[#2AA9E1] p-2 rounded text-center text-white sm:hidden"
         >
@@ -23,7 +23,7 @@
         <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
       </button>
       <div class="items-center sm:flex hidden gap-2">
-        <RouterLink to="/SignIn"
+        <RouterLink to="/invoicesboard"
           ><button class="bg-[#2AA9E1] p-2 rounded text-center text-white">
             My Invoices
           </button></RouterLink

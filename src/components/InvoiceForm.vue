@@ -1,7 +1,6 @@
 <template>
   <div
     @click="checkClick"
-    ref="invoiceWrap"
     class="bg-white h-screen w-screen flex justify-center items-center"
   >
     <form
@@ -140,6 +139,7 @@
       <div>
         <div class="flex justify-center">
           <button
+            @click="publishInvoice"
             type="sumbit"
             class="bg-[#1E417A] text-white py-2 rounded-lg font-semibold w-full"
           >
@@ -154,7 +154,8 @@
 <script setup>
 import { ref } from 'vue';
 
-const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+import 'firebase/firestore';
+
 const invoiceNumber = ref(null);
 const currency = ref(null);
 const vatNumber = ref(null);
@@ -167,6 +168,7 @@ const totalAmount = ref(0);
 const pdfFile = ref(null);
 const today = ref(getCurrentDate());
 const selectedPDF = ref(null);
+const editInvoice = ref(false);
 
 function getCurrentDate() {
   const now = new Date();
@@ -184,6 +186,27 @@ function handleFileChange(event) {
     console.log(`Selected file: ${file.name}`);
   }
 }
+
+const submitForm = async () => {
+  const dataBase = db.collection('invoices').doc();
+
+  try {
+    await dataBase.set({
+      invoiceNumber: invoiceNumber.value,
+      currency: currency.value,
+      vatNumber: vatNumber.value,
+      country: country.value,
+      issueName: issueName.value,
+      invoiceDate: invoiceDate.value,
+      paymentDueDate: paymentDueDate.value,
+      invoicePending: invoicePending.value,
+      totalAmount: totalAmount.value,
+      pdfFile: pdfFile.value,
+    });
+  } catch (error) {
+    console.error('Error uploading invoice:', error);
+  }
+};
 </script>
 
 <style scoped></style>
