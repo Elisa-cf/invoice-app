@@ -38,6 +38,7 @@
         </div>
       </div>
     </nav>
+    <div class="w-full"><img :src="BankableLine" alt="bankable line" /></div>
   </header>
 
   <RouterView />
@@ -50,6 +51,7 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import router from './router';
 import BankableLogo from './assets/images/bankable-logo.png';
 import LogOut from './assets/images/log-out.svg';
+import BankableLine from './assets/images/bankable-line.jpg';
 
 const isLoggedIn = ref(false);
 
