@@ -9,7 +9,7 @@
       <div
         class="flex items-center justify-center gap-2 border border-[#E9E9E9] p-2 w-10/12 rounded-md"
       >
-        <div class="w-4"><img :src="GoogleLogo" alt="" /></div>
+        <div class="w-4"><img :src="GoogleLogo" alt="google logo" /></div>
         <button @click="singInWithGoogle">Sign in With Google</button>
       </div>
       <div class="flex items-center space-x-2">

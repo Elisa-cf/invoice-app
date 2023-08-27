@@ -1,12 +1,42 @@
 <template>
   <header>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/register">Register</RouterLink>
-      <RouterLink to="/SignIn">Log In</RouterLink>
-      <button @click="handleSignOut" v-if="isLoggedIn" class="text-black">
-        Log out
-      </button>
+    <nav
+      class="flex items-center justify-between px-2 py-2 border-b-10 mixeds-border"
+    >
+      <RouterLink to="/">
+        <div class="w-24"><img :src="BankableLogo" alt="google logo" /></div
+      ></RouterLink>
+
+      <RouterLink to="/SignIn"
+        ><button
+          class="bg-[#2AA9E1] p-2 rounded text-center text-white sm:hidden"
+        >
+          My Invoices
+        </button></RouterLink
+      >
+      <div class="flex items-center gap-1 sm:gap-2 font-bold sm:hidden">
+        <button @click="handleSignOut" v-if="isLoggedIn" class="text-[#3B3738]">
+          Log out
+        </button>
+        <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
+      </div>
+      <div class="items-center sm:flex hidden gap-2">
+        <RouterLink to="/SignIn"
+          ><button class="bg-[#2AA9E1] p-2 rounded text-center text-white">
+            My Invoices
+          </button></RouterLink
+        >
+        <div class="flex items-center gap-1 sm:gap-2 font-bold">
+          <button
+            @click="handleSignOut"
+            v-if="isLoggedIn"
+            class="text-[#3B3738]"
+          >
+            Log out
+          </button>
+          <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
+        </div>
+      </div>
     </nav>
   </header>
 
@@ -18,6 +48,8 @@ import { RouterLink, RouterView } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import router from './router';
+import BankableLogo from './assets/images/bankable-logo.png';
+import LogOut from './assets/images/log-out.svg';
 
 const isLoggedIn = ref(false);
 
