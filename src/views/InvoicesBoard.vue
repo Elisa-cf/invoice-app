@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center mt-4">
       <div
         @click="toggleFilterMenu"
-        class="filter flex text-[#3B3738] font-bold gap-1 items-center"
+        class="filter flex text-[#3B3738] font-bold gap-1 items-center relative"
       >
         <span class="text-md"
           >Filter by status
@@ -18,7 +18,10 @@
           alt="arrow down"
           class="w-5 mt-1"
         />
-        <ul v-show="filterMenu" class="filter-menu">
+        <ul
+          v-show="filterMenu"
+          class="bg-[#e9e9e9] rounded-md top-6 absolute right-0 p-2 w-[135px] font-normal text-black"
+        >
           <li @click="filteredInvoices">Draft</li>
           <li @click="filteredInvoices">Pending</li>
           <li @click="filteredInvoices">Paid</li>
@@ -28,14 +31,14 @@
       <div>
         <RouterLink to="/"
           ><button
-            class="flex items-center gap-1 bg-[#194680] p-2 rounded text-center text-white font-semibol"
+            class="flex items-center gap-1 bg-[#194680] p-2 rounded text-center text-white font-semibold"
           >
             <span class="bg-white rounded-full p-1">
               <img
                 src="@/assets/images/plus-icon.svg"
                 alt="plus icon"
                 class="w-3" /></span
-            >New Invoices
+            >New Invoice
           </button></RouterLink
         >
       </div>
@@ -45,8 +48,15 @@
 
 <script>
 export default {
-  setup() {
-    return {};
+  data() {
+    return {
+      filterMenu: false,
+    };
+  },
+  methods: {
+    toggleFilterMenu() {
+      this.filterMenu = !this.filterMenu;
+    },
   },
 };
 </script>
