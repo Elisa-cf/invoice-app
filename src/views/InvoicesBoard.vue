@@ -1,5 +1,5 @@
 <template>
-  <header class="mt-6 w-11/12 mx-auto">
+  <header class="mt-6 w-11/12 mx-auto max-w-4xl">
     <div class="flex flex-col">
       <h1 class="text-[#3B3738] font-bold text-4xl">Invoices</h1>
       <span class="text-[#3B3738] text-base">There are 1 total invoices</span>
