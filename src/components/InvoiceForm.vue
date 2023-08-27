@@ -153,8 +153,21 @@
 
 <script setup>
 import { ref } from 'vue';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
-import 'firebase/firestore';
+const firebaseConfig = {
+  apiKey: 'AIzaSyBSKXVi8bLWmDm36Pl1XebXesubHUluIFM',
+  authDomain: 'bankable-a113d.firebaseapp.com',
+  projectId: 'bankable-a113d',
+  storageBucket: 'bankable-a113d.appspot.com',
+  messagingSenderId: '460820204014',
+  appId: '1:460820204014:web:facf89f3b64562cf0f66ff',
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+
+const db = getFirestore(firebaseApp);
 
 const invoiceNumber = ref(null);
 const currency = ref(null);
@@ -173,7 +186,7 @@ const editInvoice = ref(false);
 function getCurrentDate() {
   const now = new Date();
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // month is 0-indexed
+  const month = String(now.getMonth() + 1).padStart(2, '0');
   const day = String(now.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
@@ -182,29 +195,30 @@ function handleFileChange(event) {
   const file = event.target.files[0];
   if (file) {
     selectedPDF.value = file;
-    // Do something with the selected PDF if needed
     console.log(`Selected file: ${file.name}`);
   }
 }
 
 const submitForm = async () => {
-  const dataBase = db.collection('invoices').doc();
+  const invoiceData = {
+    invoiceNumber: invoiceNumber.value,
+    currency: currency.value,
+    vatNumber: vatNumber.value,
+    country: country.value,
+    issueName: issueName.value,
+    invoiceDate: invoiceDate.value,
+    paymentDueDate: paymentDueDate.value,
+    invoicePending: invoicePending.value,
+    totalAmount: totalAmount.value,
+    pdfFile: pdfFile.value,
+  };
 
   try {
-    await dataBase.set({
-      invoiceNumber: invoiceNumber.value,
-      currency: currency.value,
-      vatNumber: vatNumber.value,
-      country: country.value,
-      issueName: issueName.value,
-      invoiceDate: invoiceDate.value,
-      paymentDueDate: paymentDueDate.value,
-      invoicePending: invoicePending.value,
-      totalAmount: totalAmount.value,
-      pdfFile: pdfFile.value,
-    });
+    const invoicesCollectionRef = collection(db, 'invoices');
+    await addDoc(invoicesCollectionRef, invoiceData);
+    console.log('Invoice added successfully');
   } catch (error) {
-    console.error('Error uploading invoice:', error);
+    console.error('Error adding invoice:', error);
   }
 };
 </script>
