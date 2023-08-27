@@ -89,6 +89,7 @@
           v-bind:max="today"
           id="DateIssue"
           v-model="DateIssue"
+          required
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
         />
       </div>
@@ -97,6 +98,7 @@
           >Due Date:</label
         >
         <input
+          required
           type="date"
           id="dueDate"
           v-model="dueDate"
@@ -126,7 +128,7 @@
           >PDF File</label
         >
         <input
-          disabled
+          required
           type="text"
           id="pdfFile"
           v-model="pdfFile"
