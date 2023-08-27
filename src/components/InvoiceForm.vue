@@ -28,7 +28,7 @@
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
           required
           type="text"
-          id="clientName"
+          id="issueName"
           v-model="issueName"
         />
       </div>
@@ -44,15 +44,15 @@
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="clientCity"
+        <label class="text-[#3B3738] font-semibold" for="totalAmount"
           >Total Amount</label
         >
         <input
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
           required
           type="text"
-          id="TotalAmount"
-          v-model="TotalAmount"
+          id="totalAmount"
+          v-model="totalAmount"
         />
       </div>
       <div class="flex flex-col justify-center items-start">
@@ -81,28 +81,44 @@
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="DateIssue"
+        <label for="DateIssue" class="text-[#3B3738] font-semibold"
           >Date Issue</label
         >
         <input
-          disabled
-          type="text"
+          type="date"
+          v-bind:max="today"
           id="DateIssue"
           v-model="DateIssue"
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="dueDate"
+        <label for="dueDate" class="text-[#3B3738] font-semibold"
           >Due Date:</label
         >
         <input
-          disabled
-          type="text"
+          type="date"
           id="dueDate"
           v-model="dueDate"
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          v-bind:min="today"
         />
+      </div>
+
+      <div class="flex flex-col justify-center items-start">
+        <label class="text-[#3B3738] font-semibold" for="invoicePending"
+          >Invoice Status</label
+        >
+
+        <select
+          required
+          type="text"
+          id="invoicePending"
+          v-model="invoicePending"
+        >
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+        </select>
       </div>
 
       <div class="flex flex-col justify-center items-start">
@@ -139,16 +155,22 @@ const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
 const invoiceNumber = ref(null);
 const currency = ref(null);
 const vatNumber = ref(null);
-const loading = ref(null);
 const country = ref(null);
 const issueName = ref(null);
-const invoiceDateUnix = ref(null);
 const invoiceDate = ref(null);
-const paymentDueDateUnix = ref(null);
 const paymentDueDate = ref(null);
 const invoicePending = ref(null);
-const invoiceTotal = ref(0);
+const totalAmount = ref(0);
 const pdfFile = ref(null);
+const today = ref(getCurrentDate());
+
+function getCurrentDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // month is 0-indexed
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 </script>
 
 <style scoped></style>
