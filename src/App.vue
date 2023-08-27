@@ -14,28 +14,28 @@
           My Invoices
         </button></RouterLink
       >
-      <div class="flex items-center gap-1 sm:gap-2 font-bold sm:hidden">
-        <button @click="handleSignOut" v-if="isLoggedIn" class="text-[#3B3738]">
-          Log out
-        </button>
+      <button
+        class="flex items-center gap-1 sm:gap-2 font-bold sm:hidden"
+        @click="handleSignOut"
+        v-if="isLoggedIn"
+      >
+        <p class="text-[#3B3738]">Log out</p>
         <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
-      </div>
+      </button>
       <div class="items-center sm:flex hidden gap-2">
         <RouterLink to="/SignIn"
           ><button class="bg-[#2AA9E1] p-2 rounded text-center text-white">
             My Invoices
           </button></RouterLink
         >
-        <div class="flex items-center gap-1 sm:gap-2 font-bold">
-          <button
-            @click="handleSignOut"
-            v-if="isLoggedIn"
-            class="text-[#3B3738]"
-          >
-            Log out
-          </button>
+        <button
+          class="flex items-center gap-1 sm:gap-2 font-bold"
+          @click="handleSignOut"
+          v-if="isLoggedIn"
+        >
+          <p class="text-[#3B3738]">Log out</p>
           <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
-        </div>
+        </button>
       </div>
     </nav>
     <div class="w-full"><img :src="BankableLine" alt="bankable line" /></div>
