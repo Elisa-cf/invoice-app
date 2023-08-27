@@ -124,15 +124,16 @@
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="pdfFile"
-          >PDF File</label
+        <label for="pdfFile" class="text-[#3B3738] font-semibold"
+          >Upload a PDF:</label
         >
         <input
           required
-          type="text"
+          type="file"
           id="pdfFile"
-          v-model="pdfFile"
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          accept="application/pdf"
+          @change="handleFileChange"
         />
       </div>
 
@@ -165,6 +166,7 @@ const invoicePending = ref(null);
 const totalAmount = ref(0);
 const pdfFile = ref(null);
 const today = ref(getCurrentDate());
+const selectedPDF = ref(null);
 
 function getCurrentDate() {
   const now = new Date();
@@ -172,6 +174,15 @@ function getCurrentDate() {
   const month = String(now.getMonth() + 1).padStart(2, '0'); // month is 0-indexed
   const day = String(now.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+function handleFileChange(event) {
+  const file = event.target.files[0];
+  if (file) {
+    selectedPDF.value = file;
+    // Do something with the selected PDF if needed
+    console.log(`Selected file: ${file.name}`);
+  }
 }
 </script>
 
