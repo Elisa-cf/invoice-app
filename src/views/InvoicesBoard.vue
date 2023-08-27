@@ -7,7 +7,7 @@
     <div class="flex justify-between items-center mt-4">
       <div
         @click="toggleFilterMenu"
-        class="filter flex text-[#3B3738] font-bold gap-1 items-center relative"
+        class="flex text-[#3B3738] font-bold gap-1 items-center relative cursor-pointer"
       >
         <span class="text-md"
           >Filter by status
@@ -20,12 +20,17 @@
         />
         <ul
           v-show="filterMenu"
-          class="bg-[#e9e9e9] rounded-md top-6 absolute right-0 p-2 w-[135px] font-normal text-black"
+          class="bg-[#e9e9e9] rounded-md top-6 absolute right-0 w-[135px] font-normal text-black"
         >
-          <li @click="filteredInvoices">Draft</li>
-          <li @click="filteredInvoices">Pending</li>
-          <li @click="filteredInvoices">Paid</li>
-          <li @click="filteredInvoices">Clear Filter</li>
+          <li class="hover:bg-[#f2f2f2] px-2 py-1" @click="filteredInvoices">
+            Pending
+          </li>
+          <li class="hover:bg-[#f2f2f2] px-2 py-1" @click="filteredInvoices">
+            Paid
+          </li>
+          <li class="hover:bg-[#f2f2f2] px-2 py-1" @click="filteredInvoices">
+            Clear Filter
+          </li>
         </ul>
       </div>
       <div>
@@ -46,19 +51,35 @@
   </header>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      filterMenu: false,
-    };
-  },
-  methods: {
-    toggleFilterMenu() {
-      this.filterMenu = !this.filterMenu;
-    },
-  },
+<script setup>
+import { ref, computed } from 'vue';
+
+const filterMenu = ref(false);
+const filteredInvoice = ref(null);
+
+const toggleFilterMenu = () => {
+  filterMenu.value = !filterMenu.value;
 };
+
+const filteredInvoices = e => {
+  if (e.target.innerText === 'Clear Filter') {
+    filteredInvoice.value = null;
+    return;
+  }
+  filteredInvoice.value = e.target.innerText;
+};
+
+const filteredData = computed(() => {
+  return invoiceData.filter(invoice => {
+    if (filteredInvoice.value === 'Pending') {
+      return invoice.invoicePending === true;
+    }
+    if (filteredInvoice.value === 'Paid') {
+      return invoice.invoicePaid === true;
+    }
+    return true;
+  });
+});
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
