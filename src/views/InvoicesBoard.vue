@@ -33,6 +33,7 @@
           </li>
         </ul>
       </div>
+
       <div>
         <RouterLink to="/"
           ><button
@@ -49,14 +50,65 @@
       </div>
     </div>
   </header>
+  <ul>
+    <li v-for="(invoice, index) in invoiceData" :key="index">
+      Currency: {{ invoice.currency }}
+    </li>
+  </ul>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { firebaseConfig } from '../utils/firebaseConfig';
 
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+
+// state variables
+const invoiceData = ref([]);
 const filterMenu = ref(false);
 const filteredInvoice = ref(null);
 
+// Fetch invoice data from Firebase on component mount
+onMounted(async () => {
+  const getData = collection(db, 'invoices');
+  const results = await getDocs(getData);
+  results.forEach(doc => {
+    const data = doc.data();
+    console.log(invoiceData.value);
+    invoiceData.value.push({
+      docId: doc.id,
+      country: data.country,
+      currency: data.currency,
+      invoiceDate: data.invoiceDate,
+      invoiceNumber: data.invoiceNumber,
+      invoicePending: data.invoicePending,
+      issueName: data.issueName,
+      paymentDueDate: data.paymentDueDate,
+      pdfFile: data.pdfFile,
+      totalAmount: data.totalAmount,
+      vatNumber: data.vatNumber,
+    });
+  });
+});
+
+// computed property for filtered data
+const filteredData = computed(() => {
+  return invoiceData.value.filter(invoice => {
+    if (filteredInvoice.value === 'Pending') {
+      return invoice.invoicePending === true;
+    }
+    if (filteredInvoice.value === 'Paid') {
+      return invoice.invoicePaid === true;
+    }
+    return true;
+  });
+});
+
+// methods for toggling filter menu and filtering invoices
 const toggleFilterMenu = () => {
   filterMenu.value = !filterMenu.value;
 };
@@ -68,18 +120,6 @@ const filteredInvoices = e => {
   }
   filteredInvoice.value = e.target.innerText;
 };
-
-const filteredData = computed(() => {
-  return invoiceData.filter(invoice => {
-    if (filteredInvoice.value === 'Pending') {
-      return invoice.invoicePending === true;
-    }
-    if (filteredInvoice.value === 'Paid') {
-      return invoice.invoicePaid === true;
-    }
-    return true;
-  });
-});
 </script>
 
 <style scoped></style>

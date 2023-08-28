@@ -144,7 +144,6 @@
         <div class="flex justify-center items-center">
           <div
             class="w-11/12 max-w-2xl h-screen p-6 flex flex-col gap-5 justify-center"
-            @click.stop
           >
             <h2 class="text-grey4 font-bold text-4xl">Invoice Preview</h2>
             <p class="text-grey-4">Invoice Number: {{ invoiceNumber }}</p>
@@ -213,7 +212,6 @@ const totalAmount = ref(null);
 const pdfFile = ref(null);
 const today = ref(getCurrentDate());
 const selectedPDF = ref(null);
-const editInvoice = ref(false);
 const isModalOpen = ref(false);
 
 function getCurrentDate() {
