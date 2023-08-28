@@ -51,8 +51,23 @@
     </div>
   </header>
   <ul>
-    <li v-for="(invoice, index) in invoiceData" :key="index">
-      Currency: {{ invoice.currency }}
+    <li v-for="invoice in invoiceData" :key="invoice.docId">
+      <div>
+        <span>#{{ invoice.invoiceNumber }}</span>
+        <span>{{ invoice.paymentDueDate }}</span>
+        <span>{{ invoice.issueName }}</span>
+      </div>
+      <div class="right flex">
+        <span class="price"
+          >{{ invoice.totalAmount }} {{ invoice.currency }}</span
+        >
+        <div>
+          {{ invoice.invoicePending }}
+        </div>
+        <div class="icon">
+          <img src="@/assets/icon-arrow-right.svg" alt="" />
+        </div>
+      </div>
     </li>
   </ul>
 </template>
