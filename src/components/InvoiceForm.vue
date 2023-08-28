@@ -44,7 +44,7 @@
         <input
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
-          type="text"
+          type="number"
           id="totalAmount"
           v-model="totalAmount"
         />
@@ -151,12 +151,16 @@
             <p class="text-grey-4">Issue Name: {{ issueName }}</p>
             <p class="text-grey-4">VAT Number: {{ vatNumber }}</p>
             <p class="text-grey-4">Country: {{ country }}</p>
-            <p class="text-grey-4">Invoice Date: {{ invoiceDate }}</p>
             <p class="text-grey-4">
-              Invoice Amount: {{ totalAmount }} {{ currency }}
+              Invoice Date: {{ formatDate(invoiceDate) }}
+            </p>
+            <p class="text-grey-4">
+              Invoice Amount: {{ formattedTotalAmountPreview }} {{ currency }}
             </p>
 
-            <p class="text-grey-4">Payment due date: {{ paymentDueDate }}</p>
+            <p class="text-grey-4">
+              Payment due date: {{ formatDate(paymentDueDate) }}
+            </p>
             <p class="text-grey-4">Invoice Status: {{ invoicePending }}</p>
             <p class="text-grey-4">Invoice file: {{ selectedPDF.name }}</p>
 
@@ -187,19 +191,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import router from '../router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyBSKXVi8bLWmDm36Pl1XebXesubHUluIFM',
-  authDomain: 'bankable-a113d.firebaseapp.com',
-  projectId: 'bankable-a113d',
-  storageBucket: 'bankable-a113d.appspot.com',
-  messagingSenderId: '460820204014',
-  appId: '1:460820204014:web:facf89f3b64562cf0f66ff',
-};
+import { firebaseConfig } from '../utils/firebaseConfig';
 
 const firebaseApp = initializeApp(firebaseConfig);
 
@@ -213,7 +209,7 @@ const issueName = ref(null);
 const invoiceDate = ref(null);
 const paymentDueDate = ref(null);
 const invoicePending = ref(null);
-const totalAmount = ref(0);
+const totalAmount = ref(null);
 const pdfFile = ref(null);
 const today = ref(getCurrentDate());
 const selectedPDF = ref(null);
@@ -227,6 +223,15 @@ function getCurrentDate() {
   const day = String(now.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
 }
+
+const formatDate = date => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Intl.DateTimeFormat('en-GB', options).format(new Date(date));
+};
+
+const formattedTotalAmountPreview = computed(() => {
+  return totalAmount.value.toFixed(2);
+});
 
 function handleFileChange(event) {
   const file = event.target.files[0];
