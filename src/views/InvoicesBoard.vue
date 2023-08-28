@@ -1,13 +1,13 @@
 <template>
   <header class="mt-6 w-11/12 mx-auto max-w-4xl">
     <div class="flex flex-col">
-      <h1 class="text-[#3B3738] font-bold text-4xl">Invoices</h1>
-      <span class="text-[#3B3738] text-base">There are 1 total invoices</span>
+      <h1 class="text-grey4 font-bold text-4xl">Invoices</h1>
+      <span class="text-grey4 text-base">There are 1 total invoices</span>
     </div>
     <div class="flex justify-between items-center mt-4">
       <div
         @click="toggleFilterMenu"
-        class="flex text-[#3B3738] font-bold gap-1 items-center relative cursor-pointer"
+        class="flex text-grey4 font-bold gap-1 items-center relative cursor-pointer"
       >
         <span class="text-md"
           >Filter by status
@@ -20,15 +20,15 @@
         />
         <ul
           v-show="filterMenu"
-          class="bg-[#e9e9e9] rounded-md top-6 absolute right-0 w-[135px] font-normal text-black"
+          class="bg-grey2 rounded-md top-6 absolute right-0 w-[135px] font-normal text-black"
         >
-          <li class="hover:bg-[#f2f2f2] px-2 py-1" @click="filteredInvoices">
+          <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
             Pending
           </li>
-          <li class="hover:bg-[#f2f2f2] px-2 py-1" @click="filteredInvoices">
+          <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
             Paid
           </li>
-          <li class="hover:bg-[#f2f2f2] px-2 py-1" @click="filteredInvoices">
+          <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
             Clear Filter
           </li>
         </ul>
@@ -36,7 +36,7 @@
       <div>
         <RouterLink to="/"
           ><button
-            class="flex items-center gap-1 bg-[#194680] p-2 rounded text-center text-white font-semibold"
+            class="flex items-center gap-1 bg-blue4 p-2 rounded text-center text-white font-semibold"
           >
             <span class="bg-white rounded-full p-1">
               <img

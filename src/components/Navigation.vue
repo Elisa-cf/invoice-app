@@ -8,9 +8,7 @@
       ></RouterLink>
 
       <RouterLink to="/invoicesboard"
-        ><button
-          class="bg-[#2AA9E1] p-2 rounded text-center text-white sm:hidden"
-        >
+        ><button class="bg-blue1 p-2 rounded text-center text-white sm:hidden">
           My Invoices
         </button></RouterLink
       >
@@ -19,12 +17,12 @@
         @click="handleSignOut"
         v-if="isLoggedIn"
       >
-        <p class="text-[#3B3738]">Log out</p>
+        <p class="text-grey4">Log out</p>
         <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
       </button>
       <div class="items-center sm:flex hidden gap-2">
         <RouterLink to="/invoicesboard"
-          ><button class="bg-[#2AA9E1] p-2 rounded text-center text-white">
+          ><button class="bg-blue1 p-2 rounded text-center text-white">
             My Invoices
           </button></RouterLink
         >
@@ -33,7 +31,7 @@
           @click="handleSignOut"
           v-if="isLoggedIn"
         >
-          <p class="text-[#3B3738]">Log out</p>
+          <p class="text-grey4">Log out</p>
           <div class="w-4"><img :src="LogOut" alt="log out logo" /></div>
         </button>
       </div>

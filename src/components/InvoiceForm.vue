@@ -5,14 +5,14 @@
   >
     <form
       @submit.prevent="submitForm"
-      class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-[#2AA9E1]/40 gap-5 p-2 rounded-md sm:p-6"
+      class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue1/40 gap-5 p-2 rounded-md sm:p-6"
     >
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="clientEmail"
+        <label class="text-grey4 font-semibold" for="clientEmail"
           >Invoice Number</label
         >
         <input
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
           type="text"
           id="invoiceNumber"
@@ -20,11 +20,11 @@
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label for="issueName" class="text-[#3B3738] font-semibold"
+        <label for="issueName" class="text-grey4 font-semibold"
           >Issue Name</label
         >
         <input
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
           type="text"
           id="issueName"
@@ -32,9 +32,7 @@
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="currency"
-          >Currency</label
-        >
+        <label class="text-grey4 font-semibold" for="currency">Currency</label>
 
         <select required type="text" id="currency" v-model="currency">
           <option value="EUR">EUR</option>
@@ -43,11 +41,11 @@
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="totalAmount"
+        <label class="text-grey4 font-semibold" for="totalAmount"
           >Total Amount</label
         >
         <input
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
           type="text"
           id="totalAmount"
@@ -55,11 +53,9 @@
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="clientCity"
-          >Country</label
-        >
+        <label class="text-grey4 font-semibold" for="clientCity">Country</label>
         <input
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
           type="text"
           id="country"
@@ -67,11 +63,11 @@
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="VatNumber"
+        <label class="text-grey4 font-semibold" for="VatNumber"
           >VAT Number</label
         >
         <input
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
           type="text"
           id="VatNumber"
@@ -80,7 +76,7 @@
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label for="DateIssue" class="text-[#3B3738] font-semibold"
+        <label for="DateIssue" class="text-grey4 font-semibold"
           >Date Issue</label
         >
         <input
@@ -89,25 +85,23 @@
           id="DateIssue"
           v-model="DateIssue"
           required
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label for="dueDate" class="text-[#3B3738] font-semibold"
-          >Due Date:</label
-        >
+        <label for="dueDate" class="text-grey4 font-semibold">Due Date:</label>
         <input
           required
           type="date"
           id="dueDate"
           v-model="dueDate"
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           v-bind:min="today"
         />
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label class="text-[#3B3738] font-semibold" for="invoicePending"
+        <label class="text-grey4 font-semibold" for="invoicePending"
           >Invoice Status</label
         >
 
@@ -123,14 +117,14 @@
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label for="pdfFile" class="text-[#3B3738] font-semibold"
+        <label for="pdfFile" class="text-grey4 font-semibold"
           >Upload a PDF:</label
         >
         <input
           required
           type="file"
           id="pdfFile"
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-[#2275BB] focus:ring-2 caret-[#2275BB]"
+          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           accept="application/pdf"
           @change="handleFileChange"
         />
@@ -141,7 +135,7 @@
           <button
             @click="publishInvoice"
             type="sumbit"
-            class="bg-[#1E417A] text-white py-2 rounded-lg font-semibold w-full"
+            class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full"
           >
             Create Invoice
           </button>

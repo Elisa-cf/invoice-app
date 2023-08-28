@@ -1,13 +1,13 @@
 <template>
   <div
-    class="bg-[#E9E9E9] h-screen w-screen flex flex-col justify-center items-center"
+    class="bg-grey2 h-screen w-screen flex flex-col justify-center items-center"
   >
     <div
       class="bg-white flex flex-col justify-center items-center w-11/12 py-10 gap-4 rounded-md sm:w-[500px]"
     >
-      <h1 class="font-bold text-xl text-[#969696]">User Log in</h1>
+      <h1 class="font-bold text-xl text-grey3">User Log in</h1>
       <div
-        class="flex items-center justify-center gap-2 border border-[#E9E9E9] p-2 w-10/12 rounded-md"
+        class="flex items-center justify-center gap-2 border border-grey2 p-2 w-10/12 rounded-md"
       >
         <div class="w-4"><img :src="GoogleLogo" alt="google logo" /></div>
         <button @click="singInWithGoogle">Sign in With Google</button>
@@ -18,30 +18,30 @@
         <div class="w-20 border-b border-gray-400"></div>
       </div>
       <input
-        class="bg-[#F2F2F2] w-10/12 p-2 rounded-md focus:outline-none focus:ring-[#969696] focus:ring-2 caret-[#969696]"
+        class="bg-grey1 w-10/12 p-2 rounded-md focus:outline-none focus:ring-grey3 focus:ring-2 caret-grey3"
         type="text"
         placeholder="Email"
         v-model="email"
       />
       <input
-        class="bg-[#F2F2F2] w-10/12 p-2 rounded-md focus:outline-none focus:ring-[#969696] focus:ring-2 caret-[#969696]"
+        class="bg-grey1 w-10/12 p-2 rounded-md focus:outline-none focus:ring-grey3 focus:ring-2 caret-grey3"
         type="password"
         placeholder="Password"
         v-model="password"
       />
       <p
-        class="bg-[#FBDADA] border border-[#e30904] text-[#eb2300] w-10/12 p-1.5"
+        class="bg-red1 border border-red4 text-red3 w-10/12 p-1.5"
         v-if="errMsg"
       >
         {{ errMsg }}
       </p>
-      <div class="bg-[#3A7FC2] w-10/12 p-2 rounded text-center text-white">
+      <div class="bg-blue3 w-10/12 p-2 rounded text-center text-white">
         <button @click="register">LOGIN</button>
       </div>
 
       <p>
-        <span class="text-[#969696] font-bold">No account? </span>
-        <RouterLink to="/register" class="text-[#3A7FC2] font-bold"
+        <span class="text-grey3 font-bold">No account? </span>
+        <RouterLink to="/register" class="text-blue3 font-bold"
           >Sign up</RouterLink
         >
       </p>
