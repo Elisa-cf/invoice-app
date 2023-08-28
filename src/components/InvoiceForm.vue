@@ -1,7 +1,7 @@
 <template>
   <div
     @click="checkClick"
-    class="bg-white h-screen w-screen flex justify-center items-center"
+    class="bg-white flex justify-center items-center my-16"
   >
     <form
       @submit.prevent="submitForm"
@@ -63,38 +63,40 @@
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label class="text-grey4 font-semibold" for="VatNumber"
+        <label class="text-grey4 font-semibold" for="vatNumber"
           >VAT Number</label
         >
         <input
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
           type="text"
-          id="VatNumber"
-          v-model="VatNumber"
+          id="vatNumber"
+          v-model="vatNumber"
         />
       </div>
 
       <div class="flex flex-col justify-center items-start">
-        <label for="DateIssue" class="text-grey4 font-semibold"
+        <label for="invoiceDate" class="text-grey4 font-semibold"
           >Date Issue</label
         >
         <input
           type="date"
           v-bind:max="today"
-          id="DateIssue"
-          v-model="DateIssue"
+          id="invoiceDate"
+          v-model="invoiceDate"
           required
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
         />
       </div>
       <div class="flex flex-col justify-center items-start">
-        <label for="dueDate" class="text-grey4 font-semibold">Due Date:</label>
+        <label for="paymentDueDate" class="text-grey4 font-semibold"
+          >Due Date:</label
+        >
         <input
           required
           type="date"
-          id="dueDate"
-          v-model="dueDate"
+          id="paymentDueDate"
+          v-model="paymentDueDate"
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           v-bind:min="today"
         />
@@ -133,15 +135,48 @@
       <div>
         <div class="flex justify-center">
           <button
+            @click="openModal"
+            class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
+          >
+            Preview Invoice
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Preview Invoice -->
+  <div
+    v-if="isModalOpen"
+    class="fixed inset-0 flex items-center justify-center z-50"
+  >
+    <div class="absolute inset-0" @click="closeModal"></div>
+    <div
+      class="w-11/12 max-w-2xl h-screen bg-white p-6 flex flex-col gap-5"
+      @click.stop
+    >
+      <h2 class="text-grey4 font-bold text-4xl">Invoice Preview</h2>
+      <p>This is the content of the preview.</p>
+      <div class="flex gap-2 justify-between">
+        <div class="flex justify-center w-full">
+          <button
+            @click="closeModal"
+            class="bg-red2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
+          >
+            Edit Invoice
+          </button>
+        </div>
+        <div class="flex justify-center w-full">
+          <button
             @click="publishInvoice"
             type="sumbit"
-            class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full"
+            class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
           >
             Create Invoice
           </button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -176,6 +211,7 @@ const pdfFile = ref(null);
 const today = ref(getCurrentDate());
 const selectedPDF = ref(null);
 const editInvoice = ref(false);
+const isModalOpen = ref(false);
 
 function getCurrentDate() {
   const now = new Date();
@@ -192,6 +228,25 @@ function handleFileChange(event) {
     console.log(`Selected file: ${file.name}`);
   }
 }
+
+const openModal = () => {
+  if (
+    currency.value &&
+    vatNumber.value &&
+    country.value &&
+    issueName.value &&
+    invoiceDate.value &&
+    paymentDueDate.value &&
+    invoicePending.value &&
+    totalAmount.value
+  ) {
+    isModalOpen.value = true;
+  }
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+};
 
 const submitForm = async () => {
   const invoiceData = {
