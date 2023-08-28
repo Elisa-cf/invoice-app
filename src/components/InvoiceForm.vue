@@ -1,8 +1,5 @@
 <template>
-  <div
-    @click="checkClick"
-    class="bg-white flex justify-center items-center my-16"
-  >
+  <div class="bg-white flex justify-center items-center my-16 relative">
     <form
       @submit.prevent="submitForm"
       class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue1/40 gap-5 p-2 rounded-md sm:p-6"
@@ -135,53 +132,63 @@
       <div>
         <div class="flex justify-center">
           <button
-            @click="openModal"
+            @click.prevent="openModal"
             class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
           >
             Preview Invoice
           </button>
         </div>
       </div>
-    </form>
-  </div>
+      <!-- Preview Invoice -->
+      <div v-if="isModalOpen" class="absolute w-screen bg-white z-50 inset-0">
+        <div class="flex justify-center items-center">
+          <div
+            class="w-11/12 max-w-2xl h-screen p-6 flex flex-col gap-5 justify-center"
+            @click.stop
+          >
+            <h2 class="text-grey4 font-bold text-4xl">Invoice Preview</h2>
+            <p class="text-grey-4">Invoice Number: {{ invoiceNumber }}</p>
+            <p class="text-grey-4">Issue Name: {{ issueName }}</p>
+            <p class="text-grey-4">VAT Number: {{ vatNumber }}</p>
+            <p class="text-grey-4">Country: {{ country }}</p>
+            <p class="text-grey-4">Invoice Date: {{ invoiceDate }}</p>
+            <p class="text-grey-4">
+              Invoice Amount: {{ totalAmount }} {{ currency }}
+            </p>
 
-  <!-- Preview Invoice -->
-  <div
-    v-if="isModalOpen"
-    class="fixed inset-0 flex items-center justify-center z-50"
-  >
-    <div class="absolute inset-0" @click="closeModal"></div>
-    <div
-      class="w-11/12 max-w-2xl h-screen bg-white p-6 flex flex-col gap-5"
-      @click.stop
-    >
-      <h2 class="text-grey4 font-bold text-4xl">Invoice Preview</h2>
-      <p>This is the content of the preview.</p>
-      <div class="flex gap-2 justify-between">
-        <div class="flex justify-center w-full">
-          <button
-            @click="closeModal"
-            class="bg-red2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
-          >
-            Edit Invoice
-          </button>
-        </div>
-        <div class="flex justify-center w-full">
-          <button
-            @click="publishInvoice"
-            type="sumbit"
-            class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
-          >
-            Create Invoice
-          </button>
+            <p class="text-grey-4">Payment due date: {{ paymentDueDate }}</p>
+            <p class="text-grey-4">Invoice Status: {{ invoicePending }}</p>
+            <p class="text-grey-4">Invoice file: {{ selectedPDF.name }}</p>
+
+            <div class="flex gap-2 justify-between">
+              <div class="flex justify-center w-full">
+                <button
+                  @click="closeModal"
+                  class="bg-red2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg cursor-pointer"
+                >
+                  Edit Invoice
+                </button>
+              </div>
+              <div class="flex justify-center w-full">
+                <button
+                  @click.prevent="submitForm"
+                  type="submit"
+                  class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg cursor-pointer"
+                >
+                  Create Invoice
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import router from '../router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 
@@ -266,6 +273,7 @@ const submitForm = async () => {
     const invoicesCollectionRef = collection(db, 'invoices');
     await addDoc(invoicesCollectionRef, invoiceData);
     console.log('Invoice added successfully');
+    router.push('/invoicesboard');
   } catch (error) {
     console.error('Error adding invoice:', error);
   }
