@@ -49,16 +49,7 @@
           v-model="totalAmount"
         />
       </div>
-      <div class="flex flex-col justify-center items-start">
-        <label class="text-grey4 font-semibold" for="clientCity">Country</label>
-        <input
-          class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-          required
-          type="text"
-          id="country"
-          v-model="country"
-        />
-      </div>
+
       <div class="flex flex-col justify-center items-start">
         <label class="text-grey4 font-semibold" for="invoicePending"
           >Select a country</label
@@ -66,7 +57,7 @@
 
         <select required type="text" id="country" v-model="country">
           <option v-for="countryItem in countryCode" :key="countryItem.alpha2">
-            {{ countryItem.name }} ({{ countryItem.alpha2 }})
+            {{ countryItem.alpha2 }}
           </option>
         </select>
       </div>
@@ -154,43 +145,88 @@
       <div v-if="isModalOpen" class="absolute w-screen bg-white z-50 inset-0">
         <div class="flex justify-center items-center">
           <div
-            class="w-11/12 max-w-2xl h-screen p-6 flex flex-col gap-5 justify-center"
+            class="w-11/12 max-w-2xl flex flex-col gap-5 bg-white justify-center shadow-lg shadow-grey4"
           >
-            <h2 class="text-grey4 font-bold text-4xl">Invoice Preview</h2>
-            <p class="text-grey-4">Invoice Number: {{ invoiceNumber }}</p>
-            <p class="text-grey-4">Issue Name: {{ issueName }}</p>
-            <p class="text-grey-4">VAT Number: {{ vatNumber }}</p>
-            <p class="text-grey-4">Country: {{ country }}</p>
-            <p class="text-grey-4">
-              Invoice Date: {{ formatDate(invoiceDate) }}
-            </p>
-            <p class="text-grey-4">
-              Invoice Amount: {{ formattedTotalAmountPreview }} {{ currency }}
-            </p>
+            <div class="flex gap-3 md:gap-5 items-center mt-20">
+              <div class="bg-blue2 w-[100%] h-[26px]"></div>
+              <h2
+                class="text-grey4 font-semibold md:font-bold text-xl md:text-3xl uppercase whitespace-nowrap"
+              >
+                Invoice Preview
+              </h2>
+              <div class="bg-blue2 w-[10%] max-w-[44px] h-[26px]"></div>
+            </div>
+            <div class="px-6 flex flex-col gap-10">
+              <header class="flex flex-col gap-2">
+                <p class="text-grey-4 text-xl font-semibold">
+                  Invoice issue by:
+                </p>
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p>{{ issueName }}</p>
+                    <p class="text-grey-4">{{ country }}</p>
+                    <p class="text-grey-4">VAT Number: {{ vatNumber }}</p>
+                  </div>
+                  <div class="flex justify-between flex-col">
+                    <div class="text-grey-4 flex justify-between gap-4">
+                      <p class="font-bold">Invoice #</p>
+                      <p>{{ invoiceNumber }}</p>
+                    </div>
 
-            <p class="text-grey-4">
-              Payment due date: {{ formatDate(paymentDueDate) }}
-            </p>
-            <p class="text-grey-4">Invoice Status: {{ invoicePending }}</p>
-            <p class="text-grey-4">Invoice file: {{ selectedPDF.name }}</p>
+                    <div class="text-grey-4 flex justify-between gap-4">
+                      <p class="font-bold">Issue Date:</p>
+                      <p>{{ formatDate(invoiceDate) }}</p>
+                    </div>
+                  </div>
+                </div>
+              </header>
+              <div class="border border-grey4 flex gap-5 flex-col">
+                <div class="bg-grey4 text-white p-2">
+                  <p class="text-grey-4">
+                    <span class="font-semibold">Invoice file imported:</span>
+                    {{ selectedPDF.name }}
+                  </p>
+                </div>
 
-            <div class="flex gap-2 justify-between">
-              <div class="flex justify-center w-full">
-                <button
-                  @click="closeModal"
-                  class="bg-red2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg cursor-pointer"
-                >
-                  Edit Invoice
-                </button>
+                <p class="text-grey-4 p-2">
+                  <span class="font-semibold">Invoice Amount:</span>
+                  {{ formattedTotalAmountPreview }}
+                  {{ currency }}
+                </p>
+                <p class="text-grey-4 p-2">
+                  <span class="font-semibold">Payment due date:</span>
+                  {{ formatDate(paymentDueDate) }}
+                </p>
+                <p class="text-grey-4 p-2 mb-10">
+                  <span class="font-semibold">Payment Status:</span>
+                  {{ invoicePending }}
+                </p>
               </div>
-              <div class="flex justify-center w-full">
-                <button
-                  @click.prevent="submitForm"
-                  type="submit"
-                  class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg cursor-pointer"
-                >
-                  Create Invoice
-                </button>
+              <div class="flex flex-col">
+                <p class="font-bold text-red4">!Warning!</p>
+                <p class="italic">Invoices are not editable</p>
+                <p class="font-semibold">Submit with care</p>
+              </div>
+            </div>
+            <div class="p-6 flex flex-col gap-5">
+              <div class="flex gap-2 justify-between">
+                <div class="flex justify-center w-full">
+                  <button
+                    @click="closeModal"
+                    class="bg-red2 border-2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg cursor-pointer hover:bg-white hover:text-red4 hover:border-red4 hover:border-2"
+                  >
+                    Edit Invoice
+                  </button>
+                </div>
+                <div class="flex justify-center w-full">
+                  <button
+                    @click.prevent="submitForm"
+                    type="submit"
+                    class="bg-blue2 border-2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg cursor-pointer hover:bg-white hover:text-blue4 hover:border-blue4 hover:border-2"
+                  >
+                    Submit Invoice
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -206,7 +242,6 @@ import { countryCode } from '../utils/countryISO';
 import router from '../router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
-import { uploadBytes } from 'firebase/storage';
 import { firebaseConfig } from '../utils/firebaseConfig';
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -282,21 +317,8 @@ const submitForm = async () => {
     paymentDueDate: formatDate(paymentDueDate.value),
     invoicePending: invoicePending.value,
     totalAmount: totalAmount.value.toFixed(2),
-    pdfFile: null,
+    pdfFile: pdfFile.value,
   };
-  if (selectedPDF.value) {
-    // Create a storage reference
-    const storageRef = ref(storage, `pdfs/${selectedPDF.value.name}`);
-
-    // Upload the PDF file
-    const uploadTask = uploadBytes(storageRef, selectedPDF.value);
-
-    // Wait for the upload to complete
-    await uploadTask;
-
-    // Update the pdfFile field in invoiceData
-    invoiceData.pdfFile = storageRef.fullPath;
-  }
   try {
     const invoicesCollectionRef = collection(db, 'invoices');
     await addDoc(invoicesCollectionRef, invoiceData);
