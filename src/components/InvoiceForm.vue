@@ -60,13 +60,24 @@
         />
       </div>
       <div class="flex flex-col justify-center items-start">
+        <label class="text-grey4 font-semibold" for="invoicePending"
+          >Select a country</label
+        >
+
+        <select required type="text" id="country" v-model="country">
+          <option v-for="countryItem in countryCode" :key="countryItem.alpha2">
+            {{ countryItem.name }} ({{ countryItem.alpha2 }})
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-col justify-center items-start">
         <label class="text-grey4 font-semibold" for="vatNumber"
           >VAT Number</label
         >
         <input
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
-          type="text"
+          type="number"
           id="vatNumber"
           v-model="vatNumber"
         />
@@ -191,9 +202,11 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { countryCode } from '../utils/countryISO';
 import router from '../router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { uploadBytes } from 'firebase/storage';
 import { firebaseConfig } from '../utils/firebaseConfig';
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -223,7 +236,7 @@ function getCurrentDate() {
 }
 
 const formatDate = date => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
   return new Intl.DateTimeFormat('en-GB', options).format(new Date(date));
 };
 
@@ -265,13 +278,25 @@ const submitForm = async () => {
     vatNumber: vatNumber.value,
     country: country.value,
     issueName: issueName.value,
-    invoiceDate: invoiceDate.value,
-    paymentDueDate: paymentDueDate.value,
+    invoiceDate: formatDate(invoiceDate.value),
+    paymentDueDate: formatDate(paymentDueDate.value),
     invoicePending: invoicePending.value,
-    totalAmount: totalAmount.value,
-    pdfFile: pdfFile.value,
+    totalAmount: totalAmount.value.toFixed(2),
+    pdfFile: null,
   };
+  if (selectedPDF.value) {
+    // Create a storage reference
+    const storageRef = ref(storage, `pdfs/${selectedPDF.value.name}`);
 
+    // Upload the PDF file
+    const uploadTask = uploadBytes(storageRef, selectedPDF.value);
+
+    // Wait for the upload to complete
+    await uploadTask;
+
+    // Update the pdfFile field in invoiceData
+    invoiceData.pdfFile = storageRef.fullPath;
+  }
   try {
     const invoicesCollectionRef = collection(db, 'invoices');
     await addDoc(invoicesCollectionRef, invoiceData);
