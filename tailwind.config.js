@@ -2,6 +2,20 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
+    screens: {
+      xs: '430px',
+      sm: '640px',
+      // => @media (min-width: 640px) { ... }
+
+      md: '768px',
+      // => @media (min-width: 768px) { ... }
+
+      lg: '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      xl: '1280px',
+      // => @media (min-width: 1280px) { ... }
+    },
     colors: {
       black: '#00000',
       white: '#ffffff',
@@ -18,7 +32,7 @@ module.exports = {
       blue3: '#3a7fc2',
       blue4: '#194680',
       blue5: '#1E417A',
-      
+      green: '#00ff1d',
     },
     extend: {},
   },
