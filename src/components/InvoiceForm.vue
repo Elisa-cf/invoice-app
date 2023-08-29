@@ -14,6 +14,7 @@
           type="text"
           id="invoiceNumber"
           v-model="invoiceNumber"
+          maxlength="15"
         />
       </div>
       <div class="flex flex-col justify-center items-start">
@@ -26,12 +27,13 @@
           type="text"
           id="issueName"
           v-model="issueName"
+          maxlength="15"
         />
       </div>
       <div class="flex flex-col justify-center items-start">
         <label class="text-grey4 font-semibold" for="currency">Currency</label>
 
-        <select required type="text" id="currency" v-model="currency">
+        <select required id="currency" v-model="currency">
           <option value="EUR">EUR</option>
           <option value="GBP">GBP</option>
         </select>
@@ -55,9 +57,9 @@
           >Select a country</label
         >
 
-        <select required type="text" id="country" v-model="country">
+        <select required id="country" v-model="country">
           <option v-for="countryItem in countryCode" :key="countryItem.alpha2">
-            {{ countryItem.alpha2 }}
+            {{ countryItem.name }} [{{ countryItem.alpha2 }}]
           </option>
         </select>
       </div>
@@ -68,9 +70,10 @@
         <input
           class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
           required
-          type="number"
+          type="text"
           id="vatNumber"
           v-model="vatNumber"
+          maxlength="11"
         />
       </div>
 
@@ -106,12 +109,7 @@
           >Invoice Status</label
         >
 
-        <select
-          required
-          type="text"
-          id="invoicePending"
-          v-model="invoicePending"
-        >
+        <select required id="invoicePending" v-model="invoicePending">
           <option value="pending">Pending</option>
           <option value="paid">Paid</option>
         </select>
@@ -243,10 +241,13 @@ import router from '../router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { firebaseConfig } from '../utils/firebaseConfig';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore(firebaseApp);
+const auth = getAuth();
+const user = auth.currentUser;
 
 const invoiceNumber = ref(null);
 const currency = ref(null);
@@ -318,6 +319,7 @@ const submitForm = async () => {
     invoicePending: invoicePending.value,
     totalAmount: totalAmount.value.toFixed(2),
     pdfFile: pdfFile.value,
+    userId: user.uid,
   };
   try {
     const invoicesCollectionRef = collection(db, 'invoices');

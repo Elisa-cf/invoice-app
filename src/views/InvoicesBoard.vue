@@ -1,94 +1,114 @@
 <template>
-  <header class="my-6 w-11/12 mx-auto max-w-4xl">
-    <div class="flex flex-col">
-      <h1 class="text-grey4 font-bold text-4xl">Invoices</h1>
-      <span class="text-grey4 text-base">There are 1 total invoices</span>
+  <div v-if="loading" class="flex justify-center mt-10">
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-    <div class="flex justify-between items-center mt-4">
-      <div
-        @click="toggleFilterMenu"
-        class="flex text-grey4 font-bold gap-1 items-center relative cursor-pointer"
-      >
-        <span class="text-md"
-          >Filter by status
-          <span v-if="filteredInvoice">: {{ filteredInvoice }}</span></span
-        >
-        <img
-          src="@/assets/images/arrow-down.svg"
-          alt="arrow down"
-          class="w-5 mt-1"
-        />
-        <ul
-          v-show="filterMenu"
-          class="bg-grey2 rounded-md top-6 absolute right-0 w-[135px] font-normal text-black"
-        >
-          <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
-            Pending
-          </li>
-          <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
-            Paid
-          </li>
-          <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
-            Clear Filter
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <RouterLink to="/"
-          ><button
-            class="flex items-center gap-1 bg-blue4 p-2 rounded text-center text-white font-semibold"
-          >
-            <span class="bg-white rounded-full p-1">
-              <img
-                src="@/assets/images/plus-icon.svg"
-                alt="plus icon"
-                class="w-3" /></span
-            >New Invoice
-          </button></RouterLink
+  </div>
+  <div v-if="!loading">
+    <header class="my-6 w-11/12 mx-auto max-w-4xl">
+      <div class="flex flex-col">
+        <h1 class="text-grey4 font-bold text-4xl">Invoices</h1>
+        <span class="text-grey4 text-base"
+          >There are {{ filteredAndUserData.length }} total invoices</span
         >
       </div>
-    </div>
-  </header>
-
-  <div class="flex flex-col gap-3 w-11/12 mx-auto max-w-4xl justify-center">
-    <article
-      class="flex justify-between items-center bg-blue5 text-white rounded-md p-5 shadow-md shadow-grey3"
-      v-for="invoice in invoiceData"
-      :key="invoice.docId"
-    >
-      <div
-        class="grid grid-cols-2 gap-2 xs:grid-cols-3 xs:gap-x-10 sm:gap-x-20 md:grid-cols-5 lg:gap-x-14 md:gap-x-10 items-center"
-      >
-        <p class="font-bold justify-self-start">#{{ invoice.invoiceNumber }}</p>
-        <p class="justify-self-start">Due {{ invoice.paymentDueDate }}</p>
-        <p class="">{{ invoice.issueName }}</p>
-
-        <p class="font-bold justify-self-end">
-          {{ invoice.totalAmount }} {{ invoice.currency }}
-        </p>
-        <div class="">
-          <div
-            v-if="invoice.invoicePending === 'pending'"
-            class="justify-self-end flex gap-2 border border-red4/30 sm:py-2 sm:px-4 rounded-lg bg-red4/20 py-1 px-2"
+      <div class="flex justify-between items-center mt-4">
+        <div
+          @click="toggleFilterMenu"
+          class="flex text-grey4 font-bold gap-1 items-center relative cursor-pointer"
+        >
+          <span class="text-md"
+            >Filter by status
+            <span v-if="filteredInvoice">: {{ filteredInvoice }}</span></span
           >
-            <p class="text-red4">●</p>
-
-            <p class="font-semibold">{{ invoice.invoicePending }}</p>
-          </div>
-          <div
-            v-else-if="invoice.invoicePending === 'paid'"
-            class="justify-self-end flex gap-2 border border-green/30 sm:py-2 sm:px-4 rounded-lg bg-green/20 sm:pl-10 py-1 px-2"
+          <img
+            src="@/assets/images/arrow-down.svg"
+            alt="arrow down"
+            class="w-5 mt-1"
+          />
+          <ul
+            v-show="filterMenu"
+            class="bg-grey2 rounded-md top-6 absolute right-0 w-[135px] font-normal text-black"
           >
-            <p class="text-green">●</p>
-            <p class="font-semibold">{{ invoice.invoicePending }}</p>
-          </div>
+            <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
+              pending
+            </li>
+            <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
+              paid
+            </li>
+            <li class="hover:bg-grey1 px-2 py-1" @click="filteredInvoices">
+              Clear Filter
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <RouterLink to="/"
+            ><button
+              class="flex items-center gap-1 bg-blue4 p-2 rounded text-center text-white font-semibold"
+            >
+              <span class="bg-white rounded-full p-1">
+                <img
+                  src="@/assets/images/plus-icon.svg"
+                  alt="plus icon"
+                  class="w-3" /></span
+              >New Invoice
+            </button></RouterLink
+          >
         </div>
       </div>
-      <div class="justify-self-end w-[20px]">
-        <img src="../assets/images/arrow-right.svg" alt="arrow right" />
+    </header>
+
+    <div class="flex flex-col gap-3 w-11/12 mx-auto max-w-4xl justify-center">
+      <div v-for="invoice in filteredAndUserData" :key="invoice.docId">
+        <article
+          class="flex justify-between items-center bg-blue5 text-white rounded-md p-5 shadow-md shadow-grey3"
+        >
+          <div
+            class="grid grid-cols-2 gap-2 xs:grid-cols-3 xs:gap-x-10 sm:gap-x-20 md:grid-cols-5 lg:gap-x-14 md:gap-x-10 items-center"
+          >
+            <p class="font-bold justify-self-start">
+              # {{ invoice.invoiceNumber }}
+            </p>
+            <p class="justify-self-start">Due {{ invoice.paymentDueDate }}</p>
+            <p class="">{{ invoice.issueName }}</p>
+
+            <p class="font-bold justify-self-end">
+              {{ invoice.totalAmount }} {{ invoice.currency }}
+            </p>
+            <div class="">
+              <div
+                v-if="invoice.invoicePending === 'pending'"
+                class="justify-self-end flex gap-2 border border-red4/30 sm:py-2 sm:px-4 rounded-lg bg-red4/20 py-1 px-2"
+              >
+                <p class="text-red4">●</p>
+
+                <p class="font-semibold">{{ invoice.invoicePending }}</p>
+              </div>
+              <div
+                v-else-if="invoice.invoicePending === 'paid'"
+                class="justify-self-end flex gap-2 border border-green/30 sm:py-2 sm:px-4 rounded-lg bg-green/20 sm:pl-10 py-1 px-2"
+              >
+                <p class="text-green">●</p>
+                <p class="font-semibold">
+                  {{ invoice.invoicePending }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="justify-self-end w-[20px]">
+            <img src="../assets/images/arrow-right.svg" alt="arrow right" />
+          </div>
+        </article>
       </div>
-    </article>
+    </div>
   </div>
 </template>
 
@@ -98,12 +118,18 @@ import { ref, computed, onMounted } from 'vue';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { firebaseConfig } from '../utils/firebaseConfig';
+import { getAuth } from 'firebase/auth';
+import InvoiceBoardModal from '../components/InvoiceBoardModal.vue';
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
+const auth = getAuth();
+const user = auth.currentUser;
+
 // state variables
+const loading = ref(true);
 const invoiceData = ref([]);
 const filterMenu = ref(false);
 const filteredInvoice = ref(null);
@@ -112,9 +138,10 @@ const filteredInvoice = ref(null);
 onMounted(async () => {
   const getData = collection(db, 'invoices');
   const results = await getDocs(getData);
+
   results.forEach(doc => {
     const data = doc.data();
-    console.log(invoiceData.value);
+
     invoiceData.value.push({
       docId: doc.id,
       country: data.country,
@@ -127,17 +154,23 @@ onMounted(async () => {
       pdfFile: data.pdfFile,
       totalAmount: data.totalAmount,
       vatNumber: data.vatNumber,
+      userId: data.userId,
     });
   });
+  loading.value = false;
 });
 
-const filteredData = computed(() => {
-  if (filteredInvoice.value === null) {
-    return invoiceData.value;
-  } else {
+const filteredAndUserData = computed(() => {
+  if (filteredInvoice.value === 'pending' || filteredInvoice.value === 'paid') {
     return invoiceData.value.filter(
-      invoice => invoice.invoicePending === filteredInvoice.value
+      invoice =>
+        invoice.userId === user.uid &&
+        invoice.invoicePending === filteredInvoice.value
     );
+  } else if (filteredInvoice.value === 'Clear Filter') {
+    return invoiceData.value.filter(invoice => invoice.userId === user.uid);
+  } else {
+    return invoiceData.value.filter(invoice => invoice.userId === user.uid);
   }
 });
 
