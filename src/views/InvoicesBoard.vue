@@ -1,5 +1,5 @@
 <template>
-  <header class="mt-6 w-11/12 mx-auto max-w-4xl">
+  <header class="my-6 w-11/12 mx-auto max-w-4xl">
     <div class="flex flex-col">
       <h1 class="text-grey4 font-bold text-4xl">Invoices</h1>
       <span class="text-grey4 text-base">There are 1 total invoices</span>
@@ -50,30 +50,51 @@
       </div>
     </div>
   </header>
-  <ul>
-    <li v-for="invoice in invoiceData" :key="invoice.docId">
-      <div>
-        <span>#{{ invoice.invoiceNumber }}</span>
-        <span>{{ invoice.paymentDueDate }}</span>
-        <span>{{ invoice.issueName }}</span>
-      </div>
-      <div class="right flex">
-        <span class="price"
-          >{{ invoice.totalAmount }} {{ invoice.currency }}</span
-        >
-        <div>
-          {{ invoice.invoicePending }}
+
+  <div class="flex flex-col gap-3 w-11/12 mx-auto max-w-4xl justify-center">
+    <article
+      class="flex justify-between items-center bg-blue5 text-white rounded-md p-5 shadow-md shadow-grey3"
+      v-for="invoice in invoiceData"
+      :key="invoice.docId"
+    >
+      <div
+        class="grid grid-cols-2 gap-2 xs:grid-cols-3 xs:gap-x-10 sm:gap-x-20 md:grid-cols-5 lg:gap-x-14 md:gap-x-10 items-center"
+      >
+        <p class="font-bold justify-self-start">#{{ invoice.invoiceNumber }}</p>
+        <p class="justify-self-start">Due {{ invoice.paymentDueDate }}</p>
+        <p class="">{{ invoice.issueName }}</p>
+
+        <p class="font-bold justify-self-end">
+          {{ invoice.totalAmount }} {{ invoice.currency }}
+        </p>
+        <div class="">
+          <div
+            v-if="invoice.invoicePending === 'pending'"
+            class="justify-self-end flex gap-2 border border-red4/30 sm:py-2 sm:px-4 rounded-lg bg-red4/20 py-1 px-2"
+          >
+            <p class="text-red4">●</p>
+
+            <p class="font-semibold">{{ invoice.invoicePending }}</p>
+          </div>
+          <div
+            v-else-if="invoice.invoicePending === 'paid'"
+            class="justify-self-end flex gap-2 border border-green/30 sm:py-2 sm:px-4 rounded-lg bg-green/20 sm:pl-10 py-1 px-2"
+          >
+            <p class="text-green">●</p>
+            <p class="font-semibold">{{ invoice.invoicePending }}</p>
+          </div>
         </div>
-        <div class="icon">
-          <img src="@/assets/icon-arrow-right.svg" alt="" />
-        </div>
       </div>
-    </li>
-  </ul>
+      <div class="justify-self-end w-[20px]">
+        <img src="../assets/images/arrow-right.svg" alt="arrow right" />
+      </div>
+    </article>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { firebaseConfig } from '../utils/firebaseConfig';
@@ -110,17 +131,14 @@ onMounted(async () => {
   });
 });
 
-// computed property for filtered data
 const filteredData = computed(() => {
-  return invoiceData.value.filter(invoice => {
-    if (filteredInvoice.value === 'Pending') {
-      return invoice.invoicePending === true;
-    }
-    if (filteredInvoice.value === 'Paid') {
-      return invoice.invoicePaid === true;
-    }
-    return true;
-  });
+  if (filteredInvoice.value === null) {
+    return invoiceData.value;
+  } else {
+    return invoiceData.value.filter(
+      invoice => invoice.invoicePending === filteredInvoice.value
+    );
+  }
 });
 
 // methods for toggling filter menu and filtering invoices
