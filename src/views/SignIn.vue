@@ -36,7 +36,7 @@
         {{ errMsg }}
       </p>
       <div class="bg-blue3 w-10/12 p-2 rounded text-center text-white">
-        <button @click="register">LOGIN</button>
+        <button @click="signIn">LOGIN</button>
       </div>
 
       <p>
@@ -62,10 +62,10 @@ import GoogleLogo from '../assets/images/google-logo.png';
 
 const email = ref('');
 const password = ref('');
-const errMsg = ref(); // error message
+const errMsg = ref();
 const router = useRouter();
 
-const register = () => {
+const signIn = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(data => {
       console.log('Successfullly signed in');

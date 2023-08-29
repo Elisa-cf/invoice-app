@@ -119,14 +119,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { firebaseConfig } from '../utils/firebaseConfig';
 import { getAuth } from 'firebase/auth';
-import InvoiceBoardModal from '../components/InvoiceBoardModal.vue';
 
-// Initialize Firebase
+// Initialize Firebase to fetch the data
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
 const auth = getAuth();
-const user = auth.currentUser;
+const user = auth.currentUser; // to check which user is login from my db
 
 // state variables
 const loading = ref(true);
@@ -134,7 +133,7 @@ const invoiceData = ref([]);
 const filterMenu = ref(false);
 const filteredInvoice = ref(null);
 
-// Fetch invoice data from Firebase on component mount
+// Fetch invoice data from Firebase on component mount. Not with fetch or Axios because the format data in FireBase is not json
 onMounted(async () => {
   const getData = collection(db, 'invoices');
   const results = await getDocs(getData);
@@ -160,6 +159,7 @@ onMounted(async () => {
   loading.value = false;
 });
 
+// Filtering data by status and by login user (userId from db)
 const filteredAndUserData = computed(() => {
   if (filteredInvoice.value === 'pending' || filteredInvoice.value === 'paid') {
     return invoiceData.value.filter(

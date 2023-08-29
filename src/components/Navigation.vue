@@ -1,8 +1,6 @@
 <template>
   <header>
-    <nav
-      class="flex items-center justify-between px-2 py-2 border-b-10 mixeds-border"
-    >
+    <nav class="flex items-center justify-between px-2 py-2 border-b-10">
       <RouterLink to="/">
         <div class="w-24"><img :src="BankableLogo" alt="google logo" /></div
       ></RouterLink>
@@ -53,7 +51,7 @@ import BankableLine from '../assets/images/bankable-line.jpg';
 
 const isLoggedIn = ref(false);
 
-//I used onMounted hook to access Firebase once the app is mounted
+//I used onMounted hook to access Firebase once the app is mounted. Showing the logout only if there is a user login
 let auth;
 onMounted(() => {
   auth = getAuth();

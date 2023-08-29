@@ -7,7 +7,7 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './utils/firebaseConfig';
 
 
-
+// Initialize Firebase for authentication
 initializeApp(firebaseConfig);
 const app = createApp(App);
 

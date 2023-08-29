@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="bg-grey2 h-screen w-screen flex flex-col justify-center items-center"
-  >
-    <div></div>
+  <div class="bg-grey2 h-screen w-screen flex justify-center items-center">
     <div
       class="bg-white flex flex-col justify-center items-center w-11/12 py-10 gap-4 rounded-md sm:w-[500px]"
     >
@@ -63,6 +60,7 @@ import GoogleLogo from '../assets/images/google-logo.png';
 
 const email = ref('');
 const password = ref('');
+const errMsg = ref();
 const router = useRouter();
 
 const register = () => {
@@ -73,7 +71,14 @@ const register = () => {
     })
     .catch(error => {
       console.log(error.code);
-      alert(error.message);
+      if (error.code === 'auth/invalid-email') {
+        errMsg.value = 'This email address is invalid';
+      }
+      if (error.code === 'auth/email-already-in-use') {
+        errMsg.value = 'This email is already used';
+      } else {
+        errMsg.value = error.message;
+      }
     });
 };
 

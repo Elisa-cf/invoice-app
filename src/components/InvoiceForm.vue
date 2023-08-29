@@ -5,7 +5,7 @@
       class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue1/40 gap-5 p-2 rounded-md sm:p-6"
     >
       <div class="flex flex-col justify-center items-start">
-        <label class="text-grey4 font-semibold" for="clientEmail"
+        <label class="text-grey4 font-semibold" for="invoiceNumber"
           >Invoice Number</label
         >
         <input
@@ -201,8 +201,8 @@
                 </p>
               </div>
               <div class="flex flex-col">
-                <p class="font-bold text-red4">!Warning!</p>
-                <p class="italic">Invoices are not editable</p>
+                <p class="font-bold text-red4">Warning!</p>
+                <p class="italic">Invoices are not editable after sumbit</p>
                 <p class="font-semibold">Submit with care</p>
               </div>
             </div>
@@ -243,12 +243,15 @@ import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { firebaseConfig } from '../utils/firebaseConfig';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+//Conection to FireBase db
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore(firebaseApp);
 const auth = getAuth();
-const user = auth.currentUser;
+const user = auth.currentUser; //to get my login user data from FireBase
 
+//This is all the data from the form that I want to send to FireBase. As a default is null because I
+// dont want anything to appear in any input
 const invoiceNumber = ref(null);
 const currency = ref(null);
 const vatNumber = ref(null);
@@ -259,10 +262,13 @@ const paymentDueDate = ref(null);
 const invoicePending = ref(null);
 const totalAmount = ref(null);
 const pdfFile = ref(null);
-const today = ref(getCurrentDate());
 const selectedPDF = ref(null);
+//
+
+const today = ref(getCurrentDate());
 const isModalOpen = ref(false);
 
+// Function to get the current date in both calendars
 function getCurrentDate() {
   const now = new Date();
   const year = now.getFullYear();
@@ -280,6 +286,7 @@ const formattedTotalAmountPreview = computed(() => {
   return totalAmount.value.toFixed(2);
 });
 
+// function to upload the file from local machine
 function handleFileChange(event) {
   const file = event.target.files[0];
   if (file) {
@@ -288,6 +295,7 @@ function handleFileChange(event) {
   }
 }
 
+// the preview modal will open just if these values are fill up
 const openModal = () => {
   if (
     currency.value &&
@@ -307,6 +315,7 @@ const closeModal = () => {
   isModalOpen.value = false;
 };
 
+// function to send the data to FireBase db
 const submitForm = async () => {
   const invoiceData = {
     invoiceNumber: invoiceNumber.value,
@@ -319,7 +328,7 @@ const submitForm = async () => {
     invoicePending: invoicePending.value,
     totalAmount: totalAmount.value.toFixed(2),
     pdfFile: pdfFile.value,
-    userId: user.uid,
+    userId: user.uid, // extracting the currentUser id from firebase db and sending it with the form as a data
   };
   try {
     const invoicesCollectionRef = collection(db, 'invoices');
