@@ -11,12 +11,12 @@
         <legend class="sr-only">Invoice Form Inputs</legend>
         <!-- Step 1 -->
         <div v-if="currentStep === 1" class="flex flex-col gap-5">
-          <div class="flex flex-col justify-center items-start">
-            <label class="text-grey4 font-semibold" for="invoiceNumber"
+          <div :class="containerField">
+            <label :class="labelStyles" for="invoiceNumber"
               >Invoice Number</label
             >
             <input
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              :class="inputStyles"
               required
               type="text"
               id="invoiceNumber"
@@ -24,12 +24,10 @@
               maxlength="15"
             />
           </div>
-          <div class="flex flex-col justify-center items-start">
-            <label for="issueName" class="text-grey4 font-semibold"
-              >Issue Name</label
-            >
+          <div :class="containerField">
+            <label for="issueName" :class="labelStyles">Issue Name</label>
             <input
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              :class="inputStyles"
               required
               type="text"
               id="issueName"
@@ -37,10 +35,8 @@
               maxlength="15"
             />
           </div>
-          <div class="flex flex-col justify-center items-start">
-            <label class="text-grey4 font-semibold" for="currency"
-              >Currency</label
-            >
+          <div :class="containerField">
+            <label :class="labelStyles" for="currency">Currency</label>
 
             <select required id="currency" v-model="currency">
               <option value="EUR">EUR</option>
@@ -48,12 +44,10 @@
             </select>
           </div>
 
-          <div class="flex flex-col justify-center items-start">
-            <label class="text-grey4 font-semibold" for="totalAmount"
-              >Total Amount</label
-            >
+          <div :class="containerField">
+            <label :class="labelStyles" for="totalAmount">Total Amount</label>
             <input
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              :class="inputStyles"
               required
               type="number"
               id="totalAmount"
@@ -71,10 +65,8 @@
         </div>
         <!-- Step 2 -->
         <div v-if="currentStep === 2" class="flex flex-col gap-5">
-          <div class="flex flex-col justify-center items-start">
-            <label class="text-grey4 font-semibold" for="country"
-              >Select a country</label
-            >
+          <div :class="containerField">
+            <label :class="labelStyles" for="country">Select a country</label>
 
             <select required id="country" v-model="country">
               <option
@@ -85,12 +77,10 @@
               </option>
             </select>
           </div>
-          <div class="flex flex-col justify-center items-start">
-            <label class="text-grey4 font-semibold" for="vatNumber"
-              >VAT Number</label
-            >
+          <div :class="containerField">
+            <label :class="labelStyles" for="vatNumber">VAT Number</label>
             <input
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              :class="inputStyles"
               required
               type="text"
               id="vatNumber"
@@ -99,35 +89,31 @@
             />
           </div>
 
-          <div class="flex flex-col justify-center items-start">
-            <label for="invoiceDate" class="text-grey4 font-semibold"
-              >Date Issue</label
-            >
+          <div :class="containerField">
+            <label for="invoiceDate" :class="labelStyles">Date Issue</label>
             <input
               type="date"
               v-bind:max="today"
               id="invoiceDate"
               v-model="invoiceDate"
               required
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              :class="inputStyles"
             />
           </div>
-          <div class="flex flex-col justify-center items-start">
-            <label for="paymentDueDate" class="text-grey4 font-semibold"
-              >Due Date:</label
-            >
+          <div :class="containerField">
+            <label for="paymentDueDate" :class="labelStyles">Due Date:</label>
             <input
               required
               type="date"
               id="paymentDueDate"
               v-model="paymentDueDate"
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              :class="inputStyles"
               v-bind:min="today"
             />
           </div>
 
-          <div class="flex flex-col justify-center items-start">
-            <label class="text-grey4 font-semibold" for="invoicePending"
+          <div :class="containerField">
+            <label :class="labelStyles" for="invoicePending"
               >Invoice Status</label
             >
 
@@ -155,15 +141,13 @@
 
         <!-- Step 3 -->
         <div v-if="currentStep === 3" class="flex flex-col gap-5">
-          <div class="flex flex-col justify-center items-start">
-            <label for="pdfFile" class="text-grey4 font-semibold"
-              >Upload a PDF:</label
-            >
+          <div :class="containerField">
+            <label for="pdfFile" class="formLabel">Upload a PDF:</label>
             <input
               required
               type="file"
               id="pdfFile"
-              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              class="inputStyles"
               accept="application/pdf"
               @change="handleFileChange"
             />
@@ -325,6 +309,12 @@ function goToPreviousStep() {
     currentStep.value--;
   }
 }
+
+//Tailwind CSS Classes in a constant
+const inputStyles =
+  'bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2';
+const labelStyles = 'text-grey4 font-semibold';
+const containerField = 'flex flex-col justify-center items-start';
 </script>
 
 <style scoped></style>
