@@ -77,7 +77,7 @@
             <div class="flex justify-center w-full">
               <button
                 @click="$emit('submit')"
-                type="submit"
+                type="button"
                 class="bg-blue2 border-2 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg hover:bg-white hover:text-blue4 hover:border-blue4 hover:border-2"
               >
                 Submit Invoice
@@ -147,7 +147,10 @@ function close() {
 }
 
 function submit() {
-  emit('submit');
+  if (isOpen) {
+    //submit only if the modal is openm to avoid sending twice
+    emit('submit');
+  }
 }
 </script>
 
