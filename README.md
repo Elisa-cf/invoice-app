@@ -2,7 +2,7 @@
 
 This is an Invoice Management application that allows users to create and manage invoices. Users can create new invoices, filter invoices by status, and view details of each invoice.
 
-To visit the website: https://submit-invoice-app.netlify.app/signin
+To visit the website: https://submit-invoice-app.netlify.app/
 
 ## Table of Contents
 
