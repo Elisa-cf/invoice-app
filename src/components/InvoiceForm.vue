@@ -2,6 +2,10 @@
   <div
     class="bg-white flex flex-col justify-center items-center my-16 relative"
   >
+    <h2 class="text-grey4 font-bold text-3xl items-start">
+      Create a new invoice:
+    </h2>
+
     <WizardForm :currentStep="currentStep" :numberOfSteps="numberOfSteps" />
     <form
       @submit.prevent="submitForm"
