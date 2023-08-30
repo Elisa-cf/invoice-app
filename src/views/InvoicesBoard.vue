@@ -66,7 +66,9 @@
       </div>
     </header>
 
-    <div class="flex flex-col gap-3 w-11/12 mx-auto max-w-4xl justify-center">
+    <div
+      class="flex flex-col gap-3 w-11/12 mx-auto max-w-4xl justify-center mb-10"
+    >
       <div v-for="invoice in filteredAndUserData" :key="invoice.docId">
         <article
           class="flex justify-between items-center bg-blue5 text-white rounded-md p-5 shadow-md shadow-grey3"

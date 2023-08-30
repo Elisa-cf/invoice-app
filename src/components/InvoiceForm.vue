@@ -137,7 +137,7 @@
         </div>
 
         <div>
-          <div class="flex justify-center">
+          <div class="flex justify-center mt-4">
             <button
               @click.prevent="openModal"
               class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
