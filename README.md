@@ -40,9 +40,9 @@ Before you begin, ensure you have the following installed:
 
 2. Install dependencies:
 
-```sh
-npm install
-```
+  ```sh
+  npm install
+  ```
 
 3. Create a Firebase project and set up authentication and Firestore database.
 4. Update the Firebase configuration in src/utils/firebaseConfig.js with your project's credentials.
@@ -51,25 +51,25 @@ npm install
 
 1. Start the development server:
 
-```sh
-npm run dev
-```
+  ```sh
+  npm run dev
+  ```
 2. Access the app in your browser at http://localhost:3000.
 3. Sign up or log in to start managing your invoices.
 
 4. Compile and Minify for Production
 
-```sh
-npm run build
-```
+  ```sh
+  npm run build
+  ```
 
 ## Technologies Used: 
 
-Vue.js 3: Front-end framework
+[Vue.js 3](https://vuejs.org/): Front-end framework
 Firebase: Authentication and Firestore database
 Tailwind CSS: Styling and responsive design
-Vite: Build tool and development server
-Vue Router: Client-side routing
+[Vite](https://vitejs.dev/): Build tool and development server
+[Vue Router](https://router.vuejs.org/): Client-side routing
 
 ## Script Setup and Computed Properties: 
 
@@ -87,4 +87,4 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 
 # License: 
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the [MIT License](https://chat.openai.com/c/LICENSE) - see the LICENSE file for details.
