@@ -2,7 +2,7 @@
   <div
     class="bg-grey2 h-screen w-screen flex flex-col justify-center items-center"
   >
-    <div
+    <section
       class="bg-white flex flex-col justify-center items-center w-11/12 py-10 gap-4 rounded-md sm:w-[500px]"
     >
       <h1 class="font-bold text-xl text-grey3">User Log in</h1>
@@ -45,7 +45,7 @@
           >Sign up</RouterLink
         >
       </p>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -68,7 +68,6 @@ const router = useRouter();
 const signIn = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(data => {
-      console.log('Successfullly signed in');
       router.push('/');
     })
     .catch(error => {

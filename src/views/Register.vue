@@ -1,6 +1,6 @@
 <template>
   <div class="bg-grey2 h-screen w-screen flex justify-center items-center">
-    <div
+    <section
       class="bg-white flex flex-col justify-center items-center w-11/12 py-10 gap-4 rounded-md sm:w-[500px]"
     >
       <h1 class="font-bold text-xl text-grey3">Create an account</h1>
@@ -43,7 +43,7 @@
           >Log in</RouterLink
         >
       </p>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -66,7 +66,6 @@ const router = useRouter();
 const register = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then(data => {
-      console.log('Successfullly registered');
       router.push('/');
     })
     .catch(error => {

@@ -2,7 +2,8 @@
   <header>
     <nav class="flex items-center justify-between px-2 py-2 border-b-10">
       <RouterLink to="/">
-        <div class="w-24"><img :src="BankableLogo" alt="google logo" /></div
+        <div class="w-24 md:w-32 lg:w-40">
+          <img :src="BankableLogo" alt="google logo" /></div
       ></RouterLink>
 
       <RouterLink to="/invoicesboard"
