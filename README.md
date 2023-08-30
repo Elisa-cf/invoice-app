@@ -65,11 +65,11 @@ Before you begin, ensure you have the following installed:
 
 ## Technologies Used: 
 
-[Vue.js 3](https://vuejs.org/): Front-end framework
-Firebase: Authentication and Firestore database
-Tailwind CSS: Styling and responsive design
-[Vite](https://vitejs.dev/): Build tool and development server
-[Vue Router](https://router.vuejs.org/): Client-side routing
+1. [Vue.js 3](https://vuejs.org/): Front-end framework
+2. Firebase: Authentication and Firestore database
+3. Tailwind CSS: Styling and responsive design
+4. [Vite](https://vitejs.dev/): Build tool and development server
+5. [Vue Router](https://router.vuejs.org/): Client-side routing
 
 ## Script Setup and Computed Properties: 
 
