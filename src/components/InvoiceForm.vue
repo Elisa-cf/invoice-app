@@ -1,151 +1,189 @@
 <template>
-  <div class="bg-white flex justify-center items-center my-16 relative">
+  <div
+    class="bg-white flex flex-col justify-center items-center my-16 relative"
+  >
+    <WizardForm :currentStep="currentStep" :numberOfSteps="numberOfSteps" />
     <form
       @submit.prevent="submitForm"
-      class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue1/40 gap-5 p-2 rounded-md sm:p-6"
+      class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue1/40 gap-5 p-2 rounded-md sm:p-6 shadow-md"
     >
       <fieldset>
         <legend class="sr-only">Invoice Form Inputs</legend>
-        <div class="flex flex-col justify-center items-start">
-          <label class="text-grey4 font-semibold" for="invoiceNumber"
-            >Invoice Number</label
-          >
-          <input
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-            required
-            type="text"
-            id="invoiceNumber"
-            v-model="invoiceNumber"
-            maxlength="15"
-          />
-        </div>
-        <div class="flex flex-col justify-center items-start">
-          <label for="issueName" class="text-grey4 font-semibold"
-            >Issue Name</label
-          >
-          <input
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-            required
-            type="text"
-            id="issueName"
-            v-model="issueName"
-            maxlength="15"
-          />
-        </div>
-        <div class="flex flex-col justify-center items-start">
-          <label class="text-grey4 font-semibold" for="currency"
-            >Currency</label
-          >
-
-          <select required id="currency" v-model="currency">
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-          </select>
-        </div>
-
-        <div class="flex flex-col justify-center items-start">
-          <label class="text-grey4 font-semibold" for="totalAmount"
-            >Total Amount</label
-          >
-          <input
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-            required
-            type="number"
-            id="totalAmount"
-            v-model="totalAmount"
-          />
-        </div>
-
-        <div class="flex flex-col justify-center items-start">
-          <label class="text-grey4 font-semibold" for="country"
-            >Select a country</label
-          >
-
-          <select required id="country" v-model="country">
-            <option
-              v-for="countryItem in countryCode"
-              :key="countryItem.alpha2"
+        <!-- Step 1 -->
+        <div v-if="currentStep === 1" class="flex flex-col gap-5">
+          <div class="flex flex-col justify-center items-start">
+            <label class="text-grey4 font-semibold" for="invoiceNumber"
+              >Invoice Number</label
             >
-              {{ countryItem.name }} [{{ countryItem.alpha2 }}]
-            </option>
-          </select>
+            <input
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              required
+              type="text"
+              id="invoiceNumber"
+              v-model="invoiceNumber"
+              maxlength="15"
+            />
+          </div>
+          <div class="flex flex-col justify-center items-start">
+            <label for="issueName" class="text-grey4 font-semibold"
+              >Issue Name</label
+            >
+            <input
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              required
+              type="text"
+              id="issueName"
+              v-model="issueName"
+              maxlength="15"
+            />
+          </div>
+          <div class="flex flex-col justify-center items-start">
+            <label class="text-grey4 font-semibold" for="currency"
+              >Currency</label
+            >
+
+            <select required id="currency" v-model="currency">
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col justify-center items-start">
+            <label class="text-grey4 font-semibold" for="totalAmount"
+              >Total Amount</label
+            >
+            <input
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              required
+              type="number"
+              id="totalAmount"
+              v-model="totalAmount"
+            />
+          </div>
+          <div class="text-right">
+            <button
+              class="bg-blue5 w-16 rounded text-white py-1 border-2 hover:bg-white border-blue5 hover:text-blue5"
+              @click="goToNextStep"
+            >
+              Next
+            </button>
+          </div>
         </div>
-        <div class="flex flex-col justify-center items-start">
-          <label class="text-grey4 font-semibold" for="vatNumber"
-            >VAT Number</label
-          >
-          <input
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-            required
-            type="text"
-            id="vatNumber"
-            v-model="vatNumber"
-            maxlength="11"
-          />
+        <!-- Step 2 -->
+        <div v-if="currentStep === 2" class="flex flex-col gap-5">
+          <div class="flex flex-col justify-center items-start">
+            <label class="text-grey4 font-semibold" for="country"
+              >Select a country</label
+            >
+
+            <select required id="country" v-model="country">
+              <option
+                v-for="countryItem in countryCode"
+                :key="countryItem.alpha2"
+              >
+                {{ countryItem.name }} [{{ countryItem.alpha2 }}]
+              </option>
+            </select>
+          </div>
+          <div class="flex flex-col justify-center items-start">
+            <label class="text-grey4 font-semibold" for="vatNumber"
+              >VAT Number</label
+            >
+            <input
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              required
+              type="text"
+              id="vatNumber"
+              v-model="vatNumber"
+              maxlength="11"
+            />
+          </div>
+
+          <div class="flex flex-col justify-center items-start">
+            <label for="invoiceDate" class="text-grey4 font-semibold"
+              >Date Issue</label
+            >
+            <input
+              type="date"
+              v-bind:max="today"
+              id="invoiceDate"
+              v-model="invoiceDate"
+              required
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+            />
+          </div>
+          <div class="flex flex-col justify-center items-start">
+            <label for="paymentDueDate" class="text-grey4 font-semibold"
+              >Due Date:</label
+            >
+            <input
+              required
+              type="date"
+              id="paymentDueDate"
+              v-model="paymentDueDate"
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              v-bind:min="today"
+            />
+          </div>
+
+          <div class="flex flex-col justify-center items-start">
+            <label class="text-grey4 font-semibold" for="invoicePending"
+              >Invoice Status</label
+            >
+
+            <select required id="invoicePending" v-model="invoicePending">
+              <option value="pending">Pending</option>
+              <option value="paid">Paid</option>
+            </select>
+          </div>
+          <div class="flex justify-between">
+            <button
+              class="bg-red2/50 w-16 rounded text-white py-1 border-2 hover:bg-white border-red2/50 hover:text-red2"
+              @click="goToPreviousStep"
+            >
+              Back
+            </button>
+
+            <button
+              class="bg-blue5 w-16 rounded text-white py-1 border-2 hover:bg-white border-blue5 hover:text-blue5"
+              @click="goToNextStep"
+            >
+              Next
+            </button>
+          </div>
         </div>
 
-        <div class="flex flex-col justify-center items-start">
-          <label for="invoiceDate" class="text-grey4 font-semibold"
-            >Date Issue</label
+        <!-- Step 3 -->
+        <div v-if="currentStep === 3" class="flex flex-col gap-5">
+          <div class="flex flex-col justify-center items-start">
+            <label for="pdfFile" class="text-grey4 font-semibold"
+              >Upload a PDF:</label
+            >
+            <input
+              required
+              type="file"
+              id="pdfFile"
+              class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
+              accept="application/pdf"
+              @change="handleFileChange"
+            />
+          </div>
+          <button
+            class="bg-red2/50 w-16 rounded text-white py-1 border-2 hover:bg-white border-red2/50 hover:text-red2"
+            @click="goToPreviousStep"
           >
-          <input
-            type="date"
-            v-bind:max="today"
-            id="invoiceDate"
-            v-model="invoiceDate"
-            required
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-          />
-        </div>
-        <div class="flex flex-col justify-center items-start">
-          <label for="paymentDueDate" class="text-grey4 font-semibold"
-            >Due Date:</label
-          >
-          <input
-            required
-            type="date"
-            id="paymentDueDate"
-            v-model="paymentDueDate"
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-            v-bind:min="today"
-          />
-        </div>
-
-        <div class="flex flex-col justify-center items-start">
-          <label class="text-grey4 font-semibold" for="invoicePending"
-            >Invoice Status</label
-          >
-
-          <select required id="invoicePending" v-model="invoicePending">
-            <option value="pending">Pending</option>
-            <option value="paid">Paid</option>
-          </select>
-        </div>
-
-        <div class="flex flex-col justify-center items-start">
-          <label for="pdfFile" class="text-grey4 font-semibold"
-            >Upload a PDF:</label
-          >
-          <input
-            required
-            type="file"
-            id="pdfFile"
-            class="bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2"
-            accept="application/pdf"
-            @change="handleFileChange"
-          />
-        </div>
-
-        <div>
+            Back
+          </button>
           <div class="flex justify-center mt-4">
             <button
               @click.prevent="openModal"
-              class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg"
+              class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg hover:bg-gradient-to-r hover:from-blue1 hover:to-blue5"
             >
               Preview Invoice
             </button>
           </div>
         </div>
+
         <!-- Preview Invoice -->
         <div v-if="isModalOpen" class="absolute w-screen bg-white z-50 inset-0">
           <div class="flex justify-center items-center">
@@ -249,7 +287,8 @@ import router from '../router';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { firebaseConfig } from '../utils/firebaseConfig';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
+import WizardForm from './WizardForm.vue';
 
 //Conection to FireBase db
 const firebaseApp = initializeApp(firebaseConfig);
@@ -272,7 +311,8 @@ const totalAmount = ref(null);
 const pdfFile = ref(null);
 const selectedPDF = ref(null);
 //
-
+const currentStep = ref(1); //default step starts with 1
+const numberOfSteps = 3; //total of steps in the wizard
 const today = ref(getCurrentDate());
 const isModalOpen = ref(false);
 
@@ -345,6 +385,18 @@ const submitForm = async () => {
     console.error('Error adding invoice:', error);
   }
 };
+
+function goToNextStep() {
+  if (currentStep.value < numberOfSteps) {
+    currentStep.value++;
+  }
+}
+
+function goToPreviousStep() {
+  if (currentStep.value > 1) {
+    currentStep.value--;
+  }
+}
 </script>
 
 <style scoped></style>
