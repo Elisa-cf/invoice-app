@@ -5,7 +5,7 @@
     <WizardForm :currentStep="currentStep" :numberOfSteps="numberOfSteps" />
     <form
       @submit.prevent="submitForm"
-      class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue1/40 gap-5 p-2 rounded-md sm:p-6 shadow-md"
+      class="flex flex-col py-6 w-11/12 mx-auto max-w-2xl bg-blue5 gap-5 p-2 rounded-md sm:p-6 shadow-md"
     >
       <fieldset>
         <legend class="sr-only">Invoice Form Inputs</legend>
@@ -55,12 +55,7 @@
             />
           </div>
           <div class="text-right">
-            <button
-              class="bg-blue5 w-16 rounded text-white py-1 border-2 hover:bg-white border-blue5 hover:text-blue5"
-              @click="goToNextStep"
-            >
-              Next
-            </button>
+            <button :class="nextBtn" @click="goToNextStep">Next</button>
           </div>
         </div>
         <!-- Step 2 -->
@@ -130,24 +125,19 @@
               Back
             </button>
 
-            <button
-              class="bg-blue5 w-16 rounded text-white py-1 border-2 hover:bg-white border-blue5 hover:text-blue5"
-              @click="goToNextStep"
-            >
-              Next
-            </button>
+            <button :class="nextBtn" @click="goToNextStep">Next</button>
           </div>
         </div>
 
         <!-- Step 3 -->
         <div v-if="currentStep === 3" class="flex flex-col gap-5">
           <div :class="containerField">
-            <label for="pdfFile" class="formLabel">Upload a PDF:</label>
+            <label for="pdfFile" :class="labelStyles">Upload a PDF:</label>
             <input
               required
               type="file"
               id="pdfFile"
-              class="inputStyles"
+              :class="inputStyles"
               accept="application/pdf"
               @change="handleFileChange"
             />
@@ -161,7 +151,7 @@
           <div class="flex justify-center mt-4">
             <button
               @click.prevent="openModal"
-              class="bg-blue5 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg hover:bg-gradient-to-r hover:from-blue1 hover:to-blue5"
+              class="bg-blue1 text-white py-2 rounded-lg font-semibold w-full sm:py-3 sm:text-lg hover:bg-white hover:text-blue5"
             >
               Preview Invoice
             </button>
@@ -313,8 +303,10 @@ function goToPreviousStep() {
 //Tailwind CSS Classes in a constant
 const inputStyles =
   'bg-white w-full rounded-md sm:p-2 p-1 focus:outline-none focus:ring-blue2 focus:ring-2 caret-blue2';
-const labelStyles = 'text-grey4 font-semibold';
+const labelStyles = 'text-white font-semibold';
 const containerField = 'flex flex-col justify-center items-start';
+const nextBtn =
+  'bg-blue1 w-16 rounded text-white font-semibold py-1 hover:bg-white hover:text-blue5';
 </script>
 
 <style scoped></style>

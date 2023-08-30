@@ -52,7 +52,7 @@
         <div>
           <RouterLink to="/"
             ><button
-              class="flex items-center gap-1 bg-blue4 p-2 rounded text-center text-white font-semibold"
+              class="flex items-center gap-1 bg-blue1 p-2 rounded text-center text-white font-semibold"
             >
               <span class="bg-white rounded-full p-1">
                 <img

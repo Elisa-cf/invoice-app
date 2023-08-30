@@ -7,7 +7,7 @@
       ></RouterLink>
 
       <RouterLink to="/invoicesboard"
-        ><button class="bg-blue1 p-2 rounded text-center text-white sm:hidden">
+        ><button class="bg-blue5 p-2 rounded text-center text-white sm:hidden">
           My Invoices
         </button></RouterLink
       >
@@ -21,7 +21,7 @@
       </button>
       <div class="items-center sm:flex hidden gap-2">
         <RouterLink to="/invoicesboard"
-          ><button class="bg-blue1 p-2 rounded text-center text-white">
+          ><button class="bg-blue5 p-2 rounded text-center text-white">
             My Invoices
           </button></RouterLink
         >
