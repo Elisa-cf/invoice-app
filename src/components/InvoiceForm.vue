@@ -157,7 +157,7 @@
                 <h2
                   class="text-grey4 font-semibold md:font-bold text-xl md:text-3xl uppercase whitespace-nowrap"
                 >
-                  Invoice Preview
+                  <!--Invoice Preview -->
                 </h2>
                 <div class="bg-blue2 w-[10%] max-w-[44px] h-[26px]"></div>
               </div>

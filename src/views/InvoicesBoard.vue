@@ -83,23 +83,33 @@
             <p class="font-bold justify-self-end">
               {{ invoice.totalAmount }} {{ invoice.currency }}
             </p>
-            <div class="">
+            <div>
               <div
-                v-if="invoice.invoicePending === 'pending'"
-                class="justify-self-end flex gap-2 border border-red4/30 sm:py-2 sm:px-4 rounded-lg bg-red4/20 py-1 px-2"
+                :class="{
+                  flex: true,
+                  'justify-self-end': true,
+                  'gap-2': true,
+                  'rounded-lg': true,
+                  'py-1': true,
+                  'px-2': true,
+                  'sm:py-2': true,
+                  'sm:px-4': true,
+                  'border-red4/30': invoice.invoicePending === 'pending',
+                  'border-green/30': invoice.invoicePending === 'paid',
+                  'bg-red4/20': invoice.invoicePending === 'pending',
+                  'bg-green/20': invoice.invoicePending === 'paid',
+                  'sm:pl-10': invoice.invoicePending === 'paid',
+                }"
               >
-                <p class="text-red4">●</p>
-
-                <p class="font-semibold">{{ invoice.invoicePending }}</p>
-              </div>
-              <div
-                v-else-if="invoice.invoicePending === 'paid'"
-                class="justify-self-end flex gap-2 border border-green/30 sm:py-2 sm:px-4 rounded-lg bg-green/20 sm:pl-10 py-1 px-2"
-              >
-                <p class="text-green">●</p>
-                <p class="font-semibold">
-                  {{ invoice.invoicePending }}
+                <p
+                  :class="{
+                    'text-red4': invoice.invoicePending === 'pending',
+                    'text-green': invoice.invoicePending === 'paid',
+                  }"
+                >
+                  ●
                 </p>
+                <p class="font-semibold">{{ invoice.invoicePending }}</p>
               </div>
             </div>
           </div>
