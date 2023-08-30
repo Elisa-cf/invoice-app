@@ -15,11 +15,44 @@ This is an Invoice Management application that allows users to create and manage
 
 ## Features
 
-- Create new invoices with details like invoice number, issue name, currency, total amount, etc.
-- Invoice preview before submiting the form.
-- Filter invoices by their payment status (pending or paid).
+
+### Create new invoices with the following details:
+
+- Invoice number
+- Issue name
+- Currency
+- Total amount
+- VAT number
+- Country
+- Invoice date
+- Payment due date
+- Invoice status (pending or paid)
+
+### Invoice Preview:
+
+- Preview the invoice details before submitting the form.
+- View a comprehensive summary of the invoice including issue details, amount, VAT, dates, and payment status.
+- Edit the invoice details or submit the invoice for processing.
+
+### Filter Invoices:
+
+- Filter invoices based on their payment status (pending or paid).
+- Easily navigate through invoices with different payment statuses.
+  
+### Invoice List:
+
 - View a list of invoices with relevant information.
+- Each invoice displays its issue name, invoice number, total amount, and payment status.
+
+### User Authentication:
+
 - Sign up and log in to manage invoices securely.
+- User data is stored and managed using Firebase authentication.
+
+### Wizard Form:
+
+- The invoice creation process is designed as a 3-step wizard for easy data input.
+- Each step of the form guides the user through different aspects of the invoice creation process.
 
 ## Getting Started
 
