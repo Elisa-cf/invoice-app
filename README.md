@@ -12,6 +12,7 @@ To visit the website: https://submit-invoice-app.netlify.app/signin
   - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
+- [Designs](#designs)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -109,6 +110,12 @@ Before you begin, ensure you have the following installed:
 ## Script Setup and Computed Properties: 
 
 This project utilizes Vue 3's script setup syntax for component logic and Computed Properties for efficient data manipulation.
+
+## Designs
+
+- Wizard form + Invoice Board: [Go to Figma mockup](https://www.figma.com/file/KEbdEEVi1sfiMt0mlvx2bC/Bankable?type=design&node-id=12%3A1028&mode=design&t=MVdU4vaTRzzeXa8P-1)
+- Invoice Preview/Modal: [Invoice Preview idea](https://drive.google.com/file/d/14idP3JBrBQZzw3FMXbWtrOGGC0ko_Dfx/view?usp=sharing)
+- Register/Login Form: [Register/Login idea](https://drive.google.com/file/d/1mcBro5t0i9CPaRkn3773jeuZj9S0X_PX/view?usp=sharing)
 
 ## Contributing:
 
