@@ -26,6 +26,7 @@
               id="invoiceNumber"
               v-model="invoiceNumber"
               maxlength="15"
+              @input="restrictToAlphanumeric('invoiceNumber')"
             />
           </div>
           <div :class="containerField">
@@ -37,6 +38,7 @@
               id="issueName"
               v-model="issueName"
               maxlength="15"
+              @input="restrictToAlphanumeric('issueName')"
             />
           </div>
           <div :class="containerField">
@@ -84,7 +86,7 @@
               type="text"
               id="vatNumber"
               v-model="vatNumber"
-              maxlength="11"
+              @input="validateVatNumber"
             />
           </div>
 
@@ -186,7 +188,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { countryCode } from '../utils/countryISO';
 import router from '../router';
 import { initializeApp } from 'firebase/app';
@@ -303,6 +305,39 @@ function goToPreviousStep() {
     currentStep.value--;
   }
 }
+
+//function to restricted  non numeric numbers and/or alphabetic characters
+const restrictToAlphanumeric = field => {
+  if (field === 'invoiceNumber') {
+    invoiceNumber.value = invoiceNumber.value.replace(/[^a-zA-Z0-9]/g, '');
+  } else if (field === 'issueName') {
+    issueName.value = issueName.value.replace(/[^a-zA-Z0-9]/g, '');
+  }
+};
+
+//formatting VAT number to be a valid one:
+const vatPrefix = computed(() => {
+  return country.value;
+});
+
+const keepJustCountryCode = computed(() => {
+  return country.value.slice(-3, -1); //slice in order to take just the last 2 digits
+});
+
+const validateVatNumber = () => {
+  if (!vatNumber.value.startsWith(keepJustCountryCode.value)) {
+    vatNumber.value = keepJustCountryCode.value;
+  } else {
+    vatNumber.value =
+      keepJustCountryCode.value +
+      vatNumber.value.replace(/[^0-9]/g, '').substr(0, 9);
+  }
+};
+
+watch(country, newCountry => {
+  // Reset VAT number when country changes
+  vatNumber.value = keepJustCountryCode.value;
+});
 
 //Tailwind CSS Classes in a constant
 const inputStyles =
